@@ -18,9 +18,13 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { REDUCE_SIDEBAR } from "../../store/type";
+import useWindowDimensions from "../../hooks/useWindowDimension";
 
 const DashboardSideBarMin = () => {
   const router = useRouter();
+
+  const width = useWindowDimensions();
+
   const dispatch = useDispatch();
   const reduceSideBar = useSelector(
     (state) => state.DashboardConditionReducers.reduceSideBar
@@ -47,7 +51,15 @@ const DashboardSideBarMin = () => {
             className={`secondSection_dashboard ${
               router.asPath === item.link && "selected"
             }`}
-            onClick={() => RouteToPage(item.link)}
+            onClick={() => {
+              RouteToPage(item.link);
+
+              if (typeof window !== "undefined") {
+                if (width?.width <= 1024) {
+                  dispatch({ type: REDUCE_SIDEBAR, payload: false });
+                }
+              }
+            }}
           >
             <div className="secondSection_dashboardIconBody">
               <item.logo className="secondSection_dashboardIcon" />
