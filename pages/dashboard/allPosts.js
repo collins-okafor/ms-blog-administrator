@@ -24,17 +24,12 @@ const AllPosts = () => {
   const userStore = useSelector((state) => state.DashboardReducers.userStore);
   const dynamicPost = useSelector((state) => state.generalReducer.dynamicPost);
 
-  console.log(dynamicPost, "make we see");
-
   const fetchAllArticle = async () => {
     dispatch(getDashboardLoader(true));
     const constants = await Promise.all([
-      DashBoardServices.GetAllDashArticle(pagination),
+      DashBoardServices.GetTotalPost(pagination),
       DashBoardServices.getAllYourSavedPost(),
       DashBoardServices.getAllFollowing(),
-      // DashBoardServices.PendingArticle(),
-      // DashBoardServices.PublishArticle(),
-      // DashBoardServices.TotalArticle(),
     ])
       .then((data) => {
         return data;
@@ -43,7 +38,6 @@ const AllPosts = () => {
         throw err;
       });
 
-    console.log(constants, "System");
     if (constants) {
       constants[0]?.data?.map((item) => {
         const findArticle =
@@ -68,11 +62,7 @@ const AllPosts = () => {
       });
 
       dispatch(getDynamicPost(constants[0]?.data));
-      // setTotalArticle(constants[0]?.count);
       dispatch(getDashboardAllArticle(constants[0]));
-      // dispatch(getPending(constants[3]?.data));
-      // dispatch(getPublish(constants[4]?.data));
-      // dispatch(getTotal(constants[5]?.data));
       dispatch(getDashboardLoader(false));
     }
   };
@@ -98,7 +88,7 @@ const AllPosts = () => {
             if (totalArticle > dynamicPost?.length) {
               const total = pagination * 2;
               const constants = await Promise.all([
-                DashBoardServices.GetAllDashArticle(pagination),
+                DashBoardServices.GetTotalPost(pagination),
                 DashBoardServices.getAllYourSavedPost(),
                 DashBoardServices.getAllFollowing(),
               ])
