@@ -58,8 +58,8 @@ export const DashboardMinDiv = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 20px 0px;
-    padding: 15px 0px;
+    margin: 0px 0px;
+    padding: 1px 0px;
 
     .icon {
       display: none;
