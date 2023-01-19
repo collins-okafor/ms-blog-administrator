@@ -91,6 +91,8 @@ function MyApp({ Component, pageProps }) {
               rel="stylesheet"
               crossOrigin="true"
             />
+
+            <link rel="shortcut icon" href="/MP.png" />
           </Head>
 
           {/* {router.asPath.includes("dashboard") && <DashboardSideBar />} */}
