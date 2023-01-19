@@ -3,7 +3,10 @@ import { FiPrinter } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import createAdminService from "../../services/createAdmin";
-import { getAllAdminFormValue } from "../../store/actions/createAdmin";
+import {
+  getAllAdminFormValue,
+  getEditAdmin,
+} from "../../store/actions/createAdmin";
 import AdminCard from "../../universal-Components/CreateAdminCard";
 import Loader1 from "../../universal-Components/Loaders/loader1";
 import LoaderBob from "../../universal-Components/Loaders/loaderBob";
@@ -20,6 +23,8 @@ const CreateAdmin = () => {
   const getAdmin = useSelector((state) => state.createAdmin.getAdmin);
 
   const formValue = useSelector((state) => state.createAdmin.formValue);
+
+  const editAdmin = useSelector((state) => state.createAdmin.editAdmin);
 
   const myUserDetails = useSelector(
     (state) => state.DashboardReducers.userStore
@@ -53,7 +58,6 @@ const CreateAdmin = () => {
             createAdminService
               .CreateAdmin(formValue)
               .then((data) => {
-                console.log(data, "make wee wee");
                 getAdmin.unshift(formValue);
                 dispatch(getAllAdminFormValue({}));
                 setLoading(false);
@@ -64,21 +68,82 @@ const CreateAdmin = () => {
                 console.log(err);
               });
           } else {
-            setLoading(true);
+            setLoading(false);
             toast("you must be a super or root admin to create admin");
           }
         } else {
-          setLoading(true);
+          setLoading(false);
           toast("can only create super or normal admin");
         }
       } else {
-        setLoading(true);
+        setLoading(false);
         toast("password is not equal to confirm_password");
       }
     } else {
-      setLoading(true);
+      setLoading(false);
       toast("all field must be filled");
     }
+  };
+
+  const EditAdmin = () => {
+    console.log(formValue, "state");
+    setLoading(true);
+
+    if (
+      formValue?.username ||
+      formValue?.email ||
+      formValue?.password ||
+      formValue?.confirm_password ||
+      formValue?.admin
+    ) {
+      if (formValue?.password === formValue?.confirm_password) {
+        if (formValue?.admin === "super" || formValue?.admin === "normal") {
+          if (
+            myUserDetails &&
+            myUserDetails?.admin &&
+            (myUserDetails?.admin === "root" ||
+              myUserDetails?.admin === "super")
+          ) {
+            createAdminService
+              .EditAdmin(formValue._id, formValue)
+              .then((data) => {
+                getAdmin.map((item) => {
+                  if (item._id === formValue._id) {
+                    const newIndex = getAdmin.findIndex(
+                      (item) => item._id === formValue._id
+                    );
+
+                    getAdmin.splice(newIndex, 1, formValue);
+                  }
+                });
+
+                dispatch(getEditAdmin(false));
+                dispatch(getAllAdminFormValue({}));
+                setLoading(false);
+                setChange(!change);
+                toast("Successfully Edited");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else {
+            setLoading(false);
+            toast("you must be a super or root admin to create admin");
+          }
+        } else {
+          setLoading(false);
+          toast("can only create super or normal admin");
+        }
+      } else {
+        setLoading(false);
+        toast("password is not equal to confirm_password");
+      }
+    } else {
+      setLoading(false);
+      toast("all field must be filled");
+    }
+
+    setChange(!change);
   };
 
   return (
@@ -91,7 +156,7 @@ const CreateAdmin = () => {
               <input
                 type={"text"}
                 name={"username"}
-                value={formValue?.username}
+                value={formValue?.username || ""}
                 onChange={HandleChange}
               />
             </div>
@@ -100,7 +165,7 @@ const CreateAdmin = () => {
               <input
                 type={"email"}
                 name={"email"}
-                value={formValue?.email}
+                value={formValue?.email || ""}
                 onChange={HandleChange}
               />
             </div>
@@ -109,7 +174,7 @@ const CreateAdmin = () => {
               <input
                 type={"password"}
                 name={"password"}
-                value={formValue?.password}
+                value={formValue?.password || ""}
                 onChange={HandleChange}
               />
             </div>
@@ -119,7 +184,7 @@ const CreateAdmin = () => {
               <input
                 type={"password"}
                 name={"confirm_password"}
-                value={formValue?.confirm_password}
+                value={formValue?.confirm_password || ""}
                 onChange={HandleChange}
               />
             </div>
@@ -129,28 +194,46 @@ const CreateAdmin = () => {
               <input
                 type={"text"}
                 name={"admin"}
-                value={formValue?.admin}
+                value={formValue?.admin || ""}
                 onChange={HandleChange}
               />
             </div>
           </div>
           <div className="admin_button_wrapper">
             <div className="admin_button_container">
-              <button
-                disabled={
-                  !formValue?.username ||
-                  !formValue?.email ||
-                  !formValue?.password ||
-                  !formValue?.confirm_password ||
-                  !formValue?.admin ||
-                  loading
-                    ? true
-                    : false
-                }
-                onClick={CreateAdmin}
-              >
-                {loading ? <LoaderBob /> : <>Create</>}
-              </button>
+              {editAdmin ? (
+                <button
+                  disabled={
+                    !formValue?.username ||
+                    !formValue?.email ||
+                    !formValue?.password ||
+                    !formValue?.confirm_password ||
+                    !formValue?.admin ||
+                    loading
+                      ? true
+                      : false
+                  }
+                  onClick={EditAdmin}
+                >
+                  {loading ? <LoaderBob /> : <>Edit</>}
+                </button>
+              ) : (
+                <button
+                  disabled={
+                    !formValue?.username ||
+                    !formValue?.email ||
+                    !formValue?.password ||
+                    !formValue?.confirm_password ||
+                    !formValue?.admin ||
+                    loading
+                      ? true
+                      : false
+                  }
+                  onClick={CreateAdmin}
+                >
+                  {loading ? <LoaderBob /> : <>Create</>}
+                </button>
+              )}
             </div>
           </div>
         </div>

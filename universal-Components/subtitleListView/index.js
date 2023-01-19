@@ -37,8 +37,16 @@ const SubListView = () => {
       });
   };
 
+  const HandleBack = () => {
+    dispatch(getEditOption(false));
+  };
+
   return (
     <SubViewDiv>
+      <div className="Switch">
+        <button onClick={HandleBack}>Switch to Create</button>
+      </div>
+
       {(subtitle === null ||
         subtitle === undefined ||
         subtitle?.length === 0) && <NotFound text={"no admin yet"} />}

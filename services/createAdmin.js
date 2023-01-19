@@ -22,6 +22,26 @@ const createAdminService = {
         throw new Error(err);
       });
   },
+
+  EditAdmin: async (id, param) => {
+    return APIs.patch(`/api/user/edit`, param)
+      .then((data) => {
+        return data?.data?.data;
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+  },
+
+  DeletAdmin: async (param) => {
+    return APIs.post(`/api/user/delete`, param)
+      .then((data) => {
+        return data?.data?.data;
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+  },
 };
 
 export default createAdminService;

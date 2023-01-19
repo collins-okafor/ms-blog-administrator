@@ -32,7 +32,6 @@ const CreateSubtitlePage = () => {
     setLoading(true);
     SubServices.createSubtitle(formValue)
       .then((data) => {
-        console.log(data, "make wee wee");
         subtitle.unshift(formValue);
         dispatch(getFormValue({}));
         toast("successfully created");
@@ -57,16 +56,15 @@ const CreateSubtitlePage = () => {
     SubServices.editSubtitle(formValue._id, { title: formValue.title })
       .then((data) => {
         dispatch(getEditOption(false));
-        toast("Successfully Edited");
         dispatch(getFormValue({}));
         setLoading(false);
+        setChange(!change);
+        toast("Successfully Edited");
       })
       .catch((err) => {
         console.log(err);
         throw err;
       });
-
-    setChange(!change);
   };
 
   return (

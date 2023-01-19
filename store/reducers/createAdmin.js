@@ -1,6 +1,16 @@
-import { GET_ADMIN, GET_ADMIN_LOADER, GET_ADMIN_FORMVALUE } from "../type";
+import {
+  GET_ADMIN,
+  GET_ADMIN_LOADER,
+  GET_ADMIN_FORMVALUE,
+  GET_ADMIN_EDIT,
+} from "../type";
 
-const initialState = { getAdmin: [], loader: false, formValue: {} };
+const initialState = {
+  getAdmin: [],
+  loader: false,
+  formValue: {},
+  editAdmin: false,
+};
 
 const createAdmin = (state = initialState, action) => {
   const { type, payload } = action;
@@ -24,6 +34,13 @@ const createAdmin = (state = initialState, action) => {
       return {
         ...state,
         formValue: payload,
+      };
+    }
+
+    case GET_ADMIN_EDIT: {
+      return {
+        ...state,
+        editAdmin: payload,
       };
     }
 

@@ -1,4 +1,9 @@
-import { GET_ADMIN, GET_ADMIN_FORMVALUE, GET_ADMIN_LOADER } from "../type";
+import {
+  GET_ADMIN,
+  GET_ADMIN_EDIT,
+  GET_ADMIN_FORMVALUE,
+  GET_ADMIN_LOADER,
+} from "../type";
 
 export const getAllAdmin = (param) => (dispatch) => {
   dispatch({ type: GET_ADMIN, payload: param });
@@ -10,4 +15,8 @@ export const getAllAdminLoader = (param) => (dispatch) => {
 
 export const getAllAdminFormValue = (param) => (dispatch) => {
   dispatch({ type: GET_ADMIN_FORMVALUE, payload: param });
+};
+
+export const getEditAdmin = (param) => (dispatch) => {
+  dispatch({ type: GET_ADMIN_EDIT, payload: param });
 };
