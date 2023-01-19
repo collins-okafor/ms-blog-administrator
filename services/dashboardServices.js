@@ -11,6 +11,16 @@ const DashBoardServices = {
     );
   },
 
+  GetTotalPost: (arg) => {
+    return APIs.get("/api/write/posted_article", {
+      headers: { limit: arg },
+    }).then((data) => {
+      if (data?.data?.message === "success") {
+        return data.data;
+      }
+    });
+  },
+
   getDashSingleArticle: (id) => {
     return APIs.get(`/api/write/article/${id}`)
       .then((data) => {

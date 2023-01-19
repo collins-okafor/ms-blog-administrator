@@ -27,7 +27,19 @@ const CardList = () => {
         >
           <div className="cardListSearchBodyImageWrapper">
             <div className="cardListSearchBodyImageBody">
-              <Image src={Profile} alt="" className="cardListSearchBodyImage" />
+              <Image
+                src={
+                  item.profile_pic &&
+                  (item.profile_pic.startsWith("http") ||
+                    item.profile_pic.startsWith("/"))
+                    ? `${item.profile_pic}`
+                    : Profile
+                }
+                alt=""
+                width={100}
+                height={100}
+                className="cardListSearchBodyImage"
+              />
             </div>
           </div>
           <div className="cardListSearchBodyUsername">

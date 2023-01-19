@@ -31,8 +31,16 @@ const ViewProfileCard = () => {
             <div className="cardListSearchBodyImageWrapper">
               <div className="cardListSearchBodyImageBody">
                 <Image
-                  src={Profile}
+                  src={
+                    user.profile_pic &&
+                    (user.profile_pic.startsWith("http") ||
+                      user.profile_pic.startsWith("/"))
+                      ? `${user.profile_pic}`
+                      : Profile
+                  }
                   alt=""
+                  width={100}
+                  height={100}
                   className="cardListSearchBodyImage"
                 />
               </div>

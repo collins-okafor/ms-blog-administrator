@@ -46,7 +46,7 @@ const CardOverview = () => {
   const fetchAllArticle = async () => {
     dispatch(getDashboardLoader(true));
     const constants = await Promise.all([
-      DashBoardServices.GetAllDashArticle(10),
+      DashBoardServices.GetTotalPost(10),
       DashBoardServices.getAllYourSavedPost(),
       DashBoardServices.getAllFollowing(),
       DashBoardServices.PendingArticle(),
