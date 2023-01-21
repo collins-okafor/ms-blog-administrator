@@ -7,6 +7,7 @@ import {
   getAllAdmin,
   getAllAdminLoader,
 } from "../../store/actions/createAdmin";
+import { AdminWrapper } from "../../components/createAdmin/styles/admin.styles";
 
 const Create_admin = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,9 @@ const Create_admin = () => {
 
   return (
     <DashbaordPageWrapper>
+      <AdminWrapper>
+        <h2>Create Admin</h2>
+      </AdminWrapper>
       <CreateAdmin />
     </DashbaordPageWrapper>
   );

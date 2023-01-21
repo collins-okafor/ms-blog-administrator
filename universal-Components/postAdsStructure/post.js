@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import photoOne from "../../assets/Images/about-us.jpg";
+import photoOne from "../../assets/Icons/avatar-profile-photo.png";
+import photoTwo from "../../assets/Images/63936.jpg";
 import Image from "next/image";
 import { PostDiv } from "./styles/post.styles";
 import { MdOutlineBookmarkAdd, MdOutlineBookmarkRemove } from "react-icons/md";
@@ -118,7 +119,7 @@ const Post = () => {
                     (item.cover_pic.startsWith("http") ||
                       item.cover_pic.startsWith("/"))
                       ? `${item.cover_pic}`
-                      : photoOne
+                      : photoTwo
                   }
                   alt="system"
                   priority

@@ -1,5 +1,21 @@
 import styled from "styled-components";
 
+export const SubTitleSystem = styled.div`
+  h2 {
+    font-family: "Inter", sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    font-style: normal;
+    color: ${({ theme }) => theme.textColor};
+    transition: all 1.5s;
+    margin: 7px 0px;
+
+    @media screen and (max-width: 500) {
+      font-size: 22px;
+    }
+  }
+`;
+
 export const SubTitleDiv = styled.div`
   width: 100%;
   display: flex;

@@ -40,29 +40,34 @@ export const PostVerifyDiv = styled.div`
           margin: 3px 0px;
           position: relative;
 
-          .profileImage {
-            width: 26px;
-            height: 26px;
-            margin-right: 10px;
+          .mainPostContainerHeaderWrapperSystemBody {
+            display: flex;
+            align-items: center;
 
-            .profileImageState {
-              width: 100%;
-              height: 100%;
-              border-radius: 50%;
-              object-fit: cover;
+            .profileImage {
+              width: 26px;
+              height: 26px;
+              margin-right: 10px;
+
+              .profileImageState {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                object-fit: cover;
+              }
             }
-          }
 
-          .userName {
-            h4 {
-              font-family: "Public Sans", sans-serif;
-              /* font-family: "Nunito", sans-serif; */
-              font-size: 14px;
-              font-weight: 500;
-              font-style: normal;
-              color: ${({ theme }) => theme.textColor};
-              line-height: 16px;
-              transition: all 1.5s;
+            .userName {
+              h4 {
+                font-family: "Public Sans", sans-serif;
+                /* font-family: "Nunito", sans-serif; */
+                font-size: 14px;
+                font-weight: 500;
+                font-style: normal;
+                color: ${({ theme }) => theme.textColor};
+                line-height: 16px;
+                transition: all 1.5s;
+              }
             }
           }
 

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import CreateSubtitlePage from "../../components/createSubtitle";
+import { SubTitleSystem } from "../../components/createSubtitle/style/createSub.style";
 import SubServices from "../../services/subtitleServices";
 import { getLoader, getTotalSubtitle } from "../../store/actions/subtitle";
 import DashbaordPageWrapper from "../../universal-Components/DashobardPageWrapper";
@@ -27,6 +28,9 @@ const Create_subtitle = () => {
 
   return (
     <DashbaordPageWrapper>
+      <SubTitleSystem>
+        <h2>Create SubTitle</h2>
+      </SubTitleSystem>
       <CreateSubtitlePage />
     </DashbaordPageWrapper>
   );

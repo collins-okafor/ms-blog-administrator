@@ -30,7 +30,7 @@ const ArticleDetails = () => {
     if (articleDetails) {
       const constants = await Promise.all([
         DashBoardServices.getUserDetails(),
-        DashBoardServices.getDashSingleArticle(articleDetails),
+        DashBoardServices.getDashSingleArticleForAdmin(articleDetails),
         DashBoardServices.getAllPostComment(articleDetails),
         DashBoardServices.getAllPostLike(articleDetails),
         DashBoardServices.getAllPostDisLike(articleDetails),

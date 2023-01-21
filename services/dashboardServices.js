@@ -33,6 +33,18 @@ const DashBoardServices = {
       });
   },
 
+  getDashSingleArticleForAdmin: (id) => {
+    return APIs.get(`/api/write/single_article/${id}`)
+      .then((data) => {
+        if (data?.data?.message === "success") {
+          return data?.data?.data;
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+
   getUserDetails: () => {
     return APIs.get(`/api/user/user_details`)
       .then((data) => {

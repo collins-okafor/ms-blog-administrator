@@ -15,6 +15,7 @@ import { getDynamicPost } from "../../store/actions/generalAction";
 import DashBoardServices from "../../services/dashboardServices";
 import { toast } from "react-toastify";
 import { PostVerifyDiv } from "./styles/postVerify.style";
+import { getPending, getPublish } from "../../store/actions/dashboardAction";
 
 const PostVerify = () => {
   const ref = useRef();
@@ -27,6 +28,10 @@ const PostVerify = () => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const dynamicPost = useSelector((state) => state.generalReducer.dynamicPost);
+
+  const pending = useSelector((state) => state.DashboardReducers.pending);
+
+  const publish = useSelector((state) => state.DashboardReducers.publish);
 
   useMemo(() => dynamicPost, [dynamicPost]);
   const Truncate = (word, count = 60) => {
@@ -67,6 +72,14 @@ const PostVerify = () => {
     DashBoardServices.EditArticle(item._id, item)
       .then((data) => {
         // console.log(data);
+        if (checked) {
+          dispatch(getPublish(publish + 1));
+          dispatch(getPending(pending - 1));
+        } else {
+          dispatch(getPending(pending + 1));
+          dispatch(getPublish(publish - 1));
+        }
+
         toast("Successfully Edit the Article");
       })
       .catch((err) => {
@@ -157,7 +170,10 @@ const PostVerify = () => {
               // onClick={() => HandleSinglePost(item)}
             >
               <div className="mainPostContainerHeaderWrapperSystem">
-                <React.Fragment onClick={() => HandleSinglePost(item)}>
+                <div
+                  className="mainPostContainerHeaderWrapperSystemBody"
+                  onClick={() => HandleSinglePost(item)}
+                >
                   <div className="profileImage">
                     <Image
                       src={
@@ -177,7 +193,7 @@ const PostVerify = () => {
                   <div className="userName">
                     <h4>{item.username}</h4>
                   </div>
-                </React.Fragment>
+                </div>
 
                 <div className="verify">
                   <label class="switch">
