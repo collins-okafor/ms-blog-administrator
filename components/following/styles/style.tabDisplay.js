@@ -31,11 +31,11 @@ export const StyledTabDisplay = styled.div`
   .tabContainer {
     display: flex;
     justify-content: space-between;
-    width: 95%;
+    width: 100%;
     margin: auto;
     flex-wrap: wrap-reverse;
     .leftContent {
-      width: 65%;
+      width: 90%;
       color: ${({ theme }) => theme.textColor};
       @media (max-width: 700px) {
         width: 95%;

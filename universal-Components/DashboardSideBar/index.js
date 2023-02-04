@@ -1,22 +1,37 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { memo } from "react";
-import { BsBell } from "react-icons/bs";
+import { BsBell, BsSignpost2Fill } from "react-icons/bs";
 import { FaClipboardList, FaStackExchange } from "react-icons/fa";
 import { FiEdit, FiHome } from "react-icons/fi";
 import { DashbardSideBarDiv } from "./styles/dashbaordSidebar.style";
 import { GrOverview } from "react-icons/gr";
-import Logo from "../../assets/Icons/Blogger-logo-01.webp";
+import WhiteLogo from "../../assets/Icons/Mariam_Blog_White.png";
+import Logo from "../../assets/Icons/Mariam_Blog.png";
 import Profile from "../../assets/Icons/avatar-profile-photo.png";
 import { useDispatch, useSelector } from "react-redux";
-import { MdOutlineClose } from "react-icons/md";
+import {
+  MdDashboard,
+  MdNewLabel,
+  MdOutlineArticle,
+  MdOutlineClose,
+  MdPublishedWithChanges,
+} from "react-icons/md";
 import { REDUCE_SIDEBAR } from "../../store/type";
+import { RiAdminFill } from "react-icons/ri";
+import { CiNoWaitingSign } from "react-icons/ci";
+import useWindowDimensions from "../../hooks/useWindowDimension";
 
 const DashboardSidebar = () => {
+  const width = useWindowDimensions();
   const router = useRouter();
   const dispatch = useDispatch();
   const reduceSideBar = useSelector(
     (state) => state.DashboardConditionReducers.reduceSideBar
+  );
+
+  const myUserDetails = useSelector(
+    (state) => state.DashboardReducers.userStore
   );
 
   const RouteToPage = (link) => {
@@ -24,13 +39,19 @@ const DashboardSidebar = () => {
   };
 
   const ReturnSideBar = () => {
-    dispatch({ type: REDUCE_SIDEBAR, payload: true });
+    dispatch({ type: REDUCE_SIDEBAR, payload: false });
   };
 
   return (
     <DashbardSideBarDiv reduceSideBar={reduceSideBar}>
       <div className="firstSection">
-        <Image src={Logo} className="firstSection__image" alt="logo" />
+        <Image
+          src={WhiteLogo}
+          width={160}
+          className="firstSection__image"
+          alt="logo"
+          style={{ cursor: "pointer" }}
+        />
       </div>
       <div className="firstSection__upperSectionState" onClick={ReturnSideBar}>
         <MdOutlineClose className="sidebar__UpperLayerCancelIcon" />
@@ -38,48 +59,88 @@ const DashboardSidebar = () => {
 
       <div className="secondSection">
         {sideBarLink?.map((item, key) => (
-          <div
-            key={key}
-            className={`secondSection_dashboard ${
-              router.asPath === item.link && "selected"
-            }`}
-            onClick={() => RouteToPage(item.link)}
-          >
-            <div className="secondSection_dashboardIconBody">
-              <item.logo className="secondSection_dashboardIcon" />
-            </div>
-            <p>{item.title}</p>
-          </div>
+          <>
+            {item?.title === "Create Admin" ? (
+              <>
+                {myUserDetails?.admin !== "normal" && (
+                  <div
+                    key={key}
+                    className={`secondSection_dashboard ${
+                      router.asPath === item.link && "selected"
+                    }`}
+                    onClick={() => {
+                      RouteToPage(item.link);
+
+                      if (typeof window !== "undefined") {
+                        if (width?.width <= 1024) {
+                          dispatch({ type: REDUCE_SIDEBAR, payload: false });
+                        }
+                      }
+                    }}
+                  >
+                    <div className="secondSection_dashboardIconBody">
+                      <item.logo className="secondSection_dashboardIcon" />
+                    </div>
+                    <p>{item.title}</p>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div
+                key={key}
+                className={`secondSection_dashboard ${
+                  router.asPath === item.link && "selected"
+                }`}
+                onClick={() => {
+                  RouteToPage(item.link);
+
+                  if (typeof window !== "undefined") {
+                    if (width?.width <= 1024) {
+                      dispatch({ type: REDUCE_SIDEBAR, payload: false });
+                    }
+                  }
+                }}
+              >
+                <div className="secondSection_dashboardIconBody">
+                  <item.logo className="secondSection_dashboardIcon" />
+                </div>
+                <p>{item.title}</p>
+              </div>
+            )}
+          </>
         ))}
-      </div>
-      <div className="thirdSection">
-        <div className="thirdSection__ImageDetails">
-          <div className="thirdSection__ImageDetailsWrapper">
-            <Image
-              src={Profile}
-              alt={"profile"}
-              className="thirdSection__ImageDetailsImage"
-            />
-          </div>
-        </div>
-        <div className="thirdSection__infoDetials">
-          <p className="thirdSection__infoDetialsUsername">Godfirst</p>
-          <p className="thirdSection__infoDetialsEmail">
-            joshuaejike4221@gmail.com
-          </p>
-        </div>
       </div>
     </DashbardSideBarDiv>
   );
 };
 
 const sideBarLink = [
-  { logo: GrOverview, title: "Dashboard", link: "/dashboard" },
-  { logo: FiHome, title: "Dashboard", link: "/dashboard" },
+  { logo: MdDashboard, title: "OverView", link: "/dashboard" },
+  { logo: FiHome, title: "Dashboard", link: "/dashboard/overview" },
   { logo: BsBell, title: "Notifications", link: "/dashboard/notifications" },
   { logo: FaStackExchange, title: "Following", link: "/dashboard/followings" },
   { logo: FaClipboardList, title: "Stroies", link: "/dashboard/stories" },
   { logo: FiEdit, title: "Write", link: "/dashboard/write" },
+
+  { logo: CiNoWaitingSign, title: "Pending", link: "/dashboard/pending" },
+  {
+    logo: MdPublishedWithChanges,
+    title: "Published Post",
+    link: "/dashboard/published",
+  },
+  {
+    logo: MdNewLabel,
+    title: "New Post",
+    link: "/dashboard/new",
+  },
+
+  { logo: MdOutlineArticle, title: "All post", link: "/dashboard/allPosts" },
+  {
+    logo: BsSignpost2Fill,
+    title: "Post Media",
+    link: "/dashboard/create_subtitle",
+  },
+  { logo: RiAdminFill, title: "Create Admin", link: "/dashboard/create_admin" },
 ];
 
 export default memo(DashboardSidebar);

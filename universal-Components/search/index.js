@@ -1,57 +1,100 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getLoginPageCounter } from "../../store/actions/authAction";
-// import { SearchStyle } from "./styles/search.style";
-import photoTwo from "../../assets/Images/indesignSeven.jpg";
+import phoneTwo from "../../assets/Images/63936.jpg";
 import { SearchStyle } from "./styles/style";
+import landingpageService from "../../services/landingpageServices";
+import Image from "next/image";
+import DashBoardServices from "../../services/dashboardServices";
+import SpinnerMain from "../Spinner/Spinner";
 
-const SearchComp = ({ searchArry }) => {
+const SearchComp = ({ handleOpenSearch }) => {
+  const timeOut = useRef;
   const dispatch = useDispatch();
   const [searchItem, setSearchItem] = useState([]);
   const [searchNotFound, setsearchNotFound] = useState("");
+  const [loader, setLoader] = useState(false);
+
   const handleClose = () => {
     dispatch(getLoginPageCounter({}));
   };
-  const handleSearch = (e) => {
-    console.log(e.target.value);
 
-    const ss = searchArry.filter((item) =>
-      item.title.toLowerCase().includes(e.target.value.toLowerCase())
-    );
-    if (ss.length === 0) {
-      setsearchNotFound("search not found");
+  const handleSearch = (e) => {
+    setLoader(true);
+    const { value } = e.target;
+
+    clearTimeout(timeOut.current);
+
+    if (value?.length > 0) {
+      timeOut.current = setTimeout(() => {
+        DashBoardServices.SearchArticle(5, value).then((data) => {
+          if (data?.message === "success") {
+            if (data?.data?.length > 0) {
+              setLoader(false);
+              setSearchItem(data?.data);
+            } else {
+              setLoader(false);
+              setSearchItem([]);
+              setsearchNotFound("Article not found");
+            }
+          } else {
+            setLoader(false);
+            setSearchItem([]);
+            setsearchNotFound("Article not found");
+          }
+        });
+      }, 300);
     } else {
+      setLoader(false);
+      setSearchItem([]);
       setsearchNotFound("");
     }
-    if (e.target.value) {
-      setSearchItem(ss);
-    } else {
-      setSearchItem([]);
-    }
-    // console.log(item.title);
   };
-  console.log(searchItem);
+
   return (
     <SearchStyle searchItem={searchItem}>
       <button onClick={handleClose}>X</button>
       <input type="text" onChange={handleSearch} placeholder="Search..." />
-      <div className="searchContainer">
-        {searchItem.map((item, i) => (
-          <div key={i} className="searchDisplay">
-            <div className="imageContainer">
-              <img src={item.image} alt="" />
-            </div>
-            <div className="searchWord">
-              <h3>{item.title}</h3>
-              <p>{item.date}</p>
-            </div>
-          </div>
-        ))}
 
-        <div>
-          <p>{searchNotFound}</p>
+      {loader ? (
+        <SpinnerMain />
+      ) : (
+        <div className="searchContainer">
+          {searchItem?.map((item, i) => (
+            <div
+              key={i}
+              className="searchDisplay"
+              onClick={() => handleOpenSearch(item)}
+            >
+              <div className="imageContainer">
+                <Image
+                  src={
+                    item.cover_pic &&
+                    (item.cover_pic.startsWith("http") ||
+                      item.cover_pic.startsWith("/"))
+                      ? `${item.cover_pic}`
+                      : phoneTwo
+                  }
+                  alt="system"
+                  priority
+                  objectFit={"cover"}
+                  // layout={"responsive"}
+                  width={100}
+                  height={100}
+                />
+              </div>
+              <div className="searchWord">
+                <h3>{item.title}</h3>
+                <p>{item.date}</p>
+              </div>
+            </div>
+          ))}
+
+          <div>
+            <p>{searchNotFound}</p>
+          </div>
         </div>
-      </div>
+      )}
     </SearchStyle>
   );
 };

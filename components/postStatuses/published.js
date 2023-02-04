@@ -9,9 +9,9 @@ const PublishedComp = () => {
       <div className="left">
         <PostVerify />
       </div>
-      <div className="right">
+      {/* <div className="right">
         <Ads />
-      </div>
+      </div> */}
     </StyledPublishedPost>
   );
 };

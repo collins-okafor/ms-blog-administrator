@@ -6,6 +6,7 @@ import DashBoardServices from "../../services/dashboardServices";
 import {
   getDashboardAllArticle,
   getDashboardLoader,
+  getTotalArticle,
   getUserStore,
 } from "../../store/actions/dashboardAction";
 import { getDynamicPost } from "../../store/actions/generalAction";
@@ -17,10 +18,21 @@ const index = () => {
 
   const [increament, setIncreament] = useState(0);
   const [pagination, setPagination] = useState(10);
-  const [totalArticle, setTotalArticle] = useState(0);
 
   const userStore = useSelector((state) => state.DashboardReducers.userStore);
   const dynamicPost = useSelector((state) => state.generalReducer.dynamicPost);
+
+  const totalArticle = useSelector(
+    (state) => state.DashboardReducers.totalArticle
+  );
+
+  const subtitleSelectedTag = useSelector(
+    (state) => state.DashboardReducers.subtitleSelectedTag
+  );
+
+  const dashboard_Subtitle = useSelector(
+    (state) => state.DashboardReducers.dashboard_Subtitle
+  );
 
   const fetchAllArticle = async () => {
     dispatch(getDashboardLoader(true));
@@ -59,7 +71,7 @@ const index = () => {
     });
 
     dispatch(getDynamicPost(constants[0]?.data));
-    setTotalArticle(constants[0]?.count);
+    dispatch(getTotalArticle(constants[0]?.count));
     dispatch(getDashboardAllArticle(constants[0]));
     dispatch(getDashboardLoader(false));
   };
@@ -70,65 +82,127 @@ const index = () => {
 
   return (
     <DashbaordPageWrapper>
-      <InfiniteScroll
-        pageStart={increament}
-        loadMore={async () => {
-          if (totalArticle > dynamicPost?.length) {
-            const total = pagination * 2;
-            const constants = await Promise.all([
-              DashBoardServices.GetAllDashArticle(pagination),
-              DashBoardServices.getAllYourSavedPost(),
-              DashBoardServices.getAllFollowing(),
-            ])
-              .then((data) => {
-                return data;
-              })
-              .catch((err) => {
-                throw err;
+      {subtitleSelectedTag === dashboard_Subtitle[0]?.title ? (
+        <InfiniteScroll
+          pageStart={increament}
+          loadMore={async () => {
+            if (totalArticle > dynamicPost?.length) {
+              const total = pagination * 2;
+              const constants = await Promise.all([
+                DashBoardServices.GetAllDashArticle(pagination),
+                DashBoardServices.getAllYourSavedPost(),
+                DashBoardServices.getAllFollowing(),
+              ])
+                .then((data) => {
+                  return data;
+                })
+                .catch((err) => {
+                  throw err;
+                });
+
+              constants[0]?.data?.map((item) => {
+                const findArticle =
+                  constants[1]?.data.length > 0 &&
+                  constants[1]?.data?.find((save) => save?.postId === item._id);
+
+                if (findArticle) {
+                  item["save"] = true;
+                }
+
+                const findFollowers = constants[2]?.data?.find(
+                  (data) => data.followedUserId === item.createdBy
+                );
+
+                if (findFollowers) {
+                  item["followed"] = true;
+                }
+
+                if (userStore?._id === item.createdBy) {
+                  item["followed"] = "my";
+                }
               });
 
-            constants[0]?.data?.map((item) => {
-              const findArticle =
-                constants[1]?.data.length > 0 &&
-                constants[1]?.data?.find((save) => save?.postId === item._id);
-
-              if (findArticle) {
-                item["save"] = true;
-              }
-
-              const findFollowers = constants[2]?.data?.find(
-                (data) => data.followedUserId === item.createdBy
-              );
-
-              if (findFollowers) {
-                item["followed"] = true;
-              }
-
-              if (userStore?._id === item.createdBy) {
-                item["followed"] = "my";
-              }
-            });
-
-            dispatch(getDynamicPost(constants[0]?.data));
-            dispatch(getDashboardAllArticle(constants[0]));
-            setTotalArticle(constants[0]?.count);
-            setIncreament((prev) => prev + 1);
-            setPagination((prev) => prev * 2);
+              dispatch(getDynamicPost(constants[0]?.data));
+              dispatch(getDashboardAllArticle(constants[0]));
+              dispatch(getTotalArticle(constants[0]?.count));
+              setIncreament((prev) => prev + 1);
+              setPagination((prev) => prev * 2);
+            }
+          }}
+          hasMore={true || false}
+          loader={
+            <div>
+              {totalArticle > dynamicPost?.length && (
+                <div className="loader" key={0}>
+                  <SpinnerMain />
+                </div>
+              )}
+            </div>
           }
-        }}
-        hasMore={true || false}
-        loader={
-          <div>
-            {totalArticle > dynamicPost?.length && (
-              <div className="loader" key={0}>
-                <SpinnerMain />
-              </div>
-            )}
-          </div>
-        }
-      >
-        <DashboardPage />
-      </InfiniteScroll>
+        >
+          <DashboardPage />
+        </InfiniteScroll>
+      ) : (
+        <InfiniteScroll
+          pageStart={increament}
+          loadMore={async () => {
+            if (totalArticle > dynamicPost?.length) {
+              const total = pagination * 2;
+              const constants = await Promise.all([
+                DashBoardServices.TabArticle(pagination, subtitleSelectedTag),
+                DashBoardServices.getAllYourSavedPost(),
+                DashBoardServices.getAllFollowing(),
+              ])
+                .then((data) => {
+                  return data;
+                })
+                .catch((err) => {
+                  throw err;
+                });
+
+              constants[0]?.data?.map((item) => {
+                const findArticle =
+                  constants[1]?.data.length > 0 &&
+                  constants[1]?.data?.find((save) => save?.postId === item._id);
+
+                if (findArticle) {
+                  item["save"] = true;
+                }
+
+                const findFollowers = constants[2]?.data?.find(
+                  (data) => data.followedUserId === item.createdBy
+                );
+
+                if (findFollowers) {
+                  item["followed"] = true;
+                }
+
+                if (userStore?._id === item.createdBy) {
+                  item["followed"] = "my";
+                }
+              });
+
+              dispatch(getDynamicPost(constants[0]?.data));
+              dispatch(getDashboardAllArticle(constants[0]));
+              dispatch(getTotalArticle(constants[0]?.count));
+              setIncreament((prev) => prev + 1);
+              setPagination((prev) => prev * 2);
+            }
+          }}
+          hasMore={true || false}
+          loader={
+            <div>
+              {totalArticle > dynamicPost?.length && (
+                <div className="loader" key={0}>
+                  <SpinnerMain />
+                </div>
+              )}
+            </div>
+          }
+        >
+          <DashboardPage />
+        </InfiniteScroll>
+      )}
     </DashbaordPageWrapper>
   );
 };

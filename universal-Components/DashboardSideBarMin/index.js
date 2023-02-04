@@ -11,6 +11,7 @@ import {
   MdDashboard,
   MdOutlineArticle,
   MdOutlineClose,
+  MdNewLabel,
 } from "react-icons/md";
 import Logo from "../../assets/Icons/Blogger-logo-01.webp";
 import Profile from "../../assets/Icons/avatar-profile-photo.png";
@@ -67,17 +68,6 @@ const DashboardSideBarMin = () => {
           </div>
         ))}
       </div>
-      {/* <div className="thirdSection">
-        <div className="thirdSection__ImageDetails">
-          <div className="thirdSection__ImageDetailsWrapper">
-            <Image
-              src={Profile}
-              alt={"profile"}
-              className="thirdSection__ImageDetailsImage"
-            />
-          </div>
-        </div>
-      </div> */}
     </DashboardMinDiv>
   );
 };
@@ -95,6 +85,12 @@ const sideBarLink = [
     title: "Published Post",
     link: "/dashboard/published",
   },
+  {
+    logo: MdNewLabel,
+    title: "New Post",
+    link: "/dashboard/new",
+  },
+
   { logo: MdOutlineArticle, title: "All post", link: "/dashboard/allPosts" },
   {
     logo: BsSignpost2Fill,

@@ -7,7 +7,7 @@ export const PostAdsStructureDiv = styled.div`
   margin: 40px 0px;
 
   .post {
-    width: 70%;
+    width: 90%;
 
     @media screen and (max-width: 500px) {
       width: 100%;

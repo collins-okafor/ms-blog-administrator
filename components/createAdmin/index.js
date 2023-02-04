@@ -37,7 +37,6 @@ const CreateAdmin = () => {
   };
 
   const CreateAdmin = () => {
-    console.log(formValue, "state");
     setLoading(true);
 
     if (
@@ -86,7 +85,6 @@ const CreateAdmin = () => {
   };
 
   const EditAdmin = () => {
-    console.log(formValue, "state");
     setLoading(true);
 
     if (
@@ -250,9 +248,9 @@ const CreateAdmin = () => {
           </div>
         )}
       </div>
-      <div className="ads">
+      {/* <div className="ads">
         <Ads />
-      </div>
+      </div> */}
     </AdminDiv>
   );
 };

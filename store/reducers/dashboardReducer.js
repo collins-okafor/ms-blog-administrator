@@ -16,6 +16,11 @@ import {
   PUBLISH,
   PENDING,
   TOTAL,
+  NEW,
+  DASHBOARD_SUBTITLE,
+  SUBTITLE_LOADER_CONFIGURATION,
+  SUBTITLE_SELECTED_TAG,
+  TOTAL_ARTICLE,
 } from "../type";
 
 const initialState = {
@@ -36,6 +41,12 @@ const initialState = {
   pending: 0,
   publish: 0,
   total: 0,
+  new: 0,
+
+  dashboard_Subtitle: [],
+  subtitleLoaderConfiguration: false,
+  subtitleSelectedTag: "",
+  totalArticle: 0,
 };
 
 const DashboardReducers = (state = initialState, action) => {
@@ -158,6 +169,41 @@ const DashboardReducers = (state = initialState, action) => {
       return {
         ...state,
         publish: payload,
+      };
+    }
+
+    case NEW: {
+      return {
+        ...state,
+        new: payload,
+      };
+    }
+
+    case DASHBOARD_SUBTITLE: {
+      return {
+        ...state,
+        dashboard_Subtitle: payload,
+      };
+    }
+
+    case SUBTITLE_LOADER_CONFIGURATION: {
+      return {
+        ...state,
+        subtitleLoaderConfiguration: payload,
+      };
+    }
+
+    case SUBTITLE_SELECTED_TAG: {
+      return {
+        ...state,
+        subtitleSelectedTag: payload,
+      };
+    }
+
+    case TOTAL_ARTICLE: {
+      return {
+        ...state,
+        totalArticle: payload,
       };
     }
 

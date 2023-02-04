@@ -31,6 +31,10 @@ const WriteComponent = () => {
 
   const docsLoader = useSelector((state) => state.DashboardReducers.docsLoader);
 
+  const dashboard_Subtitle = useSelector(
+    (state) => state.DashboardReducers.dashboard_Subtitle
+  );
+
   const [dropItem, setDropItem] = useState("Select Details");
 
   const HandleClickDropDown = (item) => {
@@ -137,7 +141,7 @@ const WriteComponent = () => {
             </div>
             <div className="wirteWrappperBodyFirstLineDropdown">
               <Dropdown
-                list={LinksDetails}
+                list={dashboard_Subtitle}
                 select={dropItem}
                 HandleClickCoin={HandleClickDropDown}
               />
@@ -225,15 +229,5 @@ const WriteComponent = () => {
     </WriteDiv>
   );
 };
-
-const LinksDetails = [
-  { title: "Directory" },
-  { title: "Blog" },
-  { title: "Add Your Biz" },
-  { title: "Subscribe" },
-  { title: "Conversation" },
-  { title: "Popular" },
-  { title: "Contact Us" },
-];
 
 export default WriteComponent;

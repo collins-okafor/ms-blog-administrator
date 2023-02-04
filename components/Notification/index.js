@@ -25,9 +25,9 @@ const NotificationPage = () => {
             <NotFound text={"not following anyone"} />
           )}
         </div>
-        <div className="notificationContainerAds">
+        {/* <div className="notificationContainerAds">
           <Ads />
-        </div>
+        </div> */}
       </div>
     </NotificationDiv>
   );

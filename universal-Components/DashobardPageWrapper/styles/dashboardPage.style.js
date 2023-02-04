@@ -47,7 +47,7 @@ export const DashboardPagesDiv = styled.div`
   /* margin-left: ${({ reduceSideBar }) =>
     reduceSideBar ? "calc(100% - 94%)" : "calc(100% - 81%)"}; */
 
-  margin-left: calc(100% - 94%);
+  margin-left: calc(100% - 78%);
   padding: 10px 20px;
   transition: all 0.4s;
   /* animation: ${({ reduceSideBar }) => (reduceSideBar ? right : left)} 1s; */

@@ -111,9 +111,9 @@ const CreateSubtitlePage = () => {
           </div>
         )}
       </div>
-      <div className="ads">
+      {/* <div className="ads">
         <Ads />
-      </div>
+      </div> */}
     </SubTitleDiv>
   );
 };

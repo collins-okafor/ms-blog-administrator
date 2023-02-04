@@ -47,7 +47,7 @@ export const DashboardNavDiv = styled.div`
   /* margin-left: ${({ reduceSideBar }) =>
     reduceSideBar ? "calc(100% - 94%)" : "calc(100% - 81%)"}; */
 
-  margin-left: calc(100% - 94%);
+  margin-left: calc(100% - 78%);
   display: flex;
   align-items: center;
   justify-content: space-between;

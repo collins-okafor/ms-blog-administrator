@@ -62,8 +62,11 @@ const PostVerify = () => {
 
     dynamicPost?.map((data) => {
       if (data._id === item._id) {
-        console.log(data);
-        data.publish = checked;
+        if (checked === true) {
+          data.publish = "publish";
+        } else {
+          data.publish = "pending";
+        }
       }
     });
 
@@ -199,7 +202,7 @@ const PostVerify = () => {
                   <label class="switch">
                     <input
                       type="checkbox"
-                      checked={item.publish ? true : false}
+                      checked={item.publish === "publish" ? true : false}
                       onChange={(e) => handleChangePublish(e, item)}
                     />
                     <span class="slider round"></span>

@@ -50,9 +50,24 @@ export const DashboardMinDiv = styled.div`
   position: fixed;
   top: 0;
   left: 0;
+  overflow-y: auto;
   transition: all 2s;
   animation: ${right} 1s;
   /* display: ${({ reduceSideBar }) => (reduceSideBar ? "block" : "none")}; */
+
+  &::-webkit-scrollbar-track {
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #e89b2d;
+  }
 
   .firstSection {
     display: flex;

@@ -361,6 +361,30 @@ const DashBoardServices = {
       });
   },
 
+  NewArticle: (id) => {
+    return APIs.get(`/api/write/new`)
+      .then((data) => {
+        if (data?.data?.message === "success") {
+          return data?.data;
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+
+  NewArticlePost: (arg) => {
+    return APIs.get(`/api/write/post/new`, { headers: { limit: arg } })
+      .then((data) => {
+        if (data?.data?.message === "success") {
+          return data?.data;
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+
   PublishArticle: (id) => {
     return APIs.get(`/api/write/publish`)
       .then((data) => {
@@ -390,6 +414,38 @@ const DashBoardServices = {
       .then((data) => {
         if (data?.data?.message === "success") {
           return data?.data;
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+
+  SearchArticle: (arg, search) => {
+    return APIs.get(`/api/write/search_article/${search}`, {
+      headers: { limit: arg },
+    }).then((data) => {
+      if (data?.data?.message === "success") {
+        return data.data;
+      }
+    });
+  },
+
+  TabArticle: (arg, tab) => {
+    return APIs.get(`/api/write/tag_article/${tab}`, {
+      headers: { limit: arg },
+    }).then((data) => {
+      if (data?.data?.message === "success") {
+        return data?.data;
+      }
+    });
+  },
+
+  getTags: () => {
+    return APIs.get(`/api/subtitle/total`)
+      .then((data) => {
+        if (data?.data?.message === "success") {
+          return data?.data?.data;
         }
       })
       .catch((err) => {

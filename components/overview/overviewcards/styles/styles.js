@@ -8,7 +8,7 @@ export const StyledOverView = styled.div`
 
   margin: 2rem 0;
   .left {
-    width: 75%;
+    width: 90%;
 
     @media screen and (max-width: 900px) {
       width: 100%;
@@ -23,7 +23,7 @@ export const StyledOverView = styled.div`
     margin-bottom: 3rem;
 
     .card {
-      width: 32%;
+      width: 23%;
       height: 20vh;
       box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
       padding: 20px;

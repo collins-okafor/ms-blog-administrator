@@ -6,6 +6,8 @@ export const SearchStyle = styled.div`
   background-color: ${({ theme }) => theme.BaseColor};
   /* color: white; */
   text-align: center;
+  overflow: auto;
+
   button {
     position: absolute;
     font-size: 30px;
@@ -15,6 +17,7 @@ export const SearchStyle = styled.div`
     top: 1rem;
     right: 1rem;
   }
+
   input {
     width: 70%;
     margin: 1rem auto;
@@ -34,9 +37,12 @@ export const SearchStyle = styled.div`
     width: 70%;
     margin: 0 auto;
     background-color: ${({ theme, searchItem }) =>
-      searchItem.length > 0 && theme.stableColor};
+      searchItem?.length > 0 && theme.stableColor};
     color: white;
     padding: 2px 10px;
+    /* overflow-y: auto; */
+    margin-bottom: 70px;
+
     @media (max-width: 700px) {
       width: 95%;
     }
@@ -46,6 +52,8 @@ export const SearchStyle = styled.div`
       margin-top: 1rem;
       align-items: center;
       border-bottom: 1px solid white;
+      cursor: pointer;
+
       .imageContainer {
         width: 13%;
         height: 70px;

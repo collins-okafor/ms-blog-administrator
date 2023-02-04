@@ -7,11 +7,14 @@ import DashBoardServices from "../../services/dashboardServices";
 import {
   getDashboardAllArticle,
   getDashboardLoader,
+  getPending,
+  getPublish,
+  getTotal,
 } from "../../store/actions/dashboardAction";
 import { getDynamicPost } from "../../store/actions/generalAction";
 import DashbaordPageWrapper from "../../universal-Components/DashobardPageWrapper";
 import Loader1 from "../../universal-Components/Loaders/loader1";
-
+``;
 const PublishedPosts = () => {
   const dispatch = useDispatch();
 
@@ -30,7 +33,7 @@ const PublishedPosts = () => {
   const fetchAllArticle = async () => {
     dispatch(getDashboardLoader(true));
     const constants = await Promise.all([
-      DashBoardServices.PublishArticlePost(pagination),
+      DashBoardServices.NewArticlePost(pagination),
       DashBoardServices.getAllYourSavedPost(),
       DashBoardServices.getAllFollowing(),
     ])
@@ -41,6 +44,7 @@ const PublishedPosts = () => {
         throw err;
       });
 
+    console.log(constants, "System");
     if (constants) {
       constants[0]?.data?.map((item) => {
         const findArticle =
@@ -76,7 +80,7 @@ const PublishedPosts = () => {
 
   return (
     <DashbaordPageWrapper>
-      <h1>Published Post</h1>
+      <h1>New Post</h1>
 
       {loading && (
         <div style={{ width: "100%", margin: "30px 0px" }}>
@@ -91,7 +95,7 @@ const PublishedPosts = () => {
             if (totalArticle > dynamicPost?.length) {
               const total = pagination * 2;
               const constants = await Promise.all([
-                DashBoardServices.PublishArticlePost(pagination),
+                DashBoardServices.NewArticlePost(pagination),
                 DashBoardServices.getAllYourSavedPost(),
                 DashBoardServices.getAllFollowing(),
               ])

@@ -23,7 +23,7 @@ export const AdminDiv = styled.div`
   margin: 40px 0px;
 
   .create_admin_wrapper {
-    width: 70%;
+    width: 90%;
 
     .admin_create_container {
       width: 100%;

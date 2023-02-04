@@ -16,12 +16,7 @@ const DashboardSearch = () => {
     router.push(`/dashboard/${item._id}`);
     dispatch(getLoginPageCounter({}));
   };
-  return (
-    <SearchComp
-      searchArry={dashboardAllArticle?.data}
-      handleOpenSearch={HandleClick}
-    />
-  );
+  return <SearchComp handleOpenSearch={HandleClick} />;
 };
 
 export default DashboardSearch;

@@ -10,9 +10,9 @@ const SavedPostIndex = () => {
       <div className="post">
         <SavedPostStructure />
       </div>
-      <div className="ads">
+      {/* <div className="ads">
         <Ads />
-      </div>
+      </div> */}
     </PostAdsStructureDiv>
   );
 };

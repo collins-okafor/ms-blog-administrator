@@ -8,7 +8,7 @@ export const ArticleDisplayDiv = styled.div`
   padding: 40px 0px 80px 0px;
 
   .articleWrapper {
-    width: 70%;
+    width: 95%;
 
     .articleWrapper__header {
       display: flex;
@@ -410,13 +410,13 @@ export const ArticleDisplayDiv = styled.div`
     }
   }
 
-  .articleWrapperAds {
+  /* .articleWrapperAds {
     width: 25%;
 
     @media screen and (max-width: 500px) {
       width: 100%;
     }
-  }
+  } */
 
   @media screen and (max-width: 500px) {
     flex-direction: column-reverse;

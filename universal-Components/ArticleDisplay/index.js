@@ -273,26 +273,11 @@ const ArticleDisplay = () => {
           </div>
         )}
       </div>
-      <div className={"articleWrapperAds"}>
+      {/* <div className={"articleWrapperAds"}>
         <Ads />
-      </div>
+      </div> */}
     </ArticleDisplayDiv>
   );
 };
-
-const ArrayList = [
-  {
-    text: "That far ground rat pure from newt far panther crane lorikeet overlay alas cobra across much gosh less goldfinch ruthlessly alas examined and that more and the ouch jeez.",
-  },
-  {
-    text: "That far ground rat pure from newt far panther crane lorikeet overlay alas cobra across much gosh less goldfinch ruthlessly alas examined and that more and the ouch jeez.",
-  },
-  {
-    text: "That far ground rat pure from newt far panther crane lorikeet overlay alas cobra across much gosh less goldfinch ruthlessly alas examined and that more and the ouch jeez.",
-  },
-  {
-    text: "That far ground rat pure from newt far panther crane lorikeet overlay alas cobra across much gosh less goldfinch ruthlessly alas examined and that more and the ouch jeez.",
-  },
-];
 
 export default ArticleDisplay;

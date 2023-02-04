@@ -3,7 +3,9 @@ import {
   DASHBOARD_ALL_ARTICLE,
   DASHBOARD_LOADER,
   DASHBOARD_SINGLE_POST,
+  DASHBOARD_SUBTITLE,
   MY_USER_DETAILS,
+  NEW,
   NOTIFICATION_STATE,
   OTHER_USER_DETAILS,
   PENDING,
@@ -13,7 +15,10 @@ import {
   SINGLE_POST_COMMENT,
   SINGLE_POST_DISLIKE,
   SINGLE_POST_LIKE,
+  SUBTITLE_LOADER_CONFIGURATION,
+  SUBTITLE_SELECTED_TAG,
   TOTAL,
+  TOTAL_ARTICLE,
   USER_DETAILS,
   USER_STORE,
 } from "../type";
@@ -84,4 +89,24 @@ export const getPending = (param) => (dispatch) => {
 
 export const getTotal = (param) => (dispatch) => {
   dispatch({ type: TOTAL, payload: param });
+};
+
+export const getNew = (param) => (dispatch) => {
+  dispatch({ type: NEW, payload: param });
+};
+
+export const getDashboardSubtitle = (param) => (dispatch) => {
+  dispatch({ type: DASHBOARD_SUBTITLE, payload: param });
+};
+
+export const getSubtitleLoader = (param) => (dispatch) => {
+  dispatch({ type: SUBTITLE_LOADER_CONFIGURATION, payload: param });
+};
+
+export const getSubtitleSelectedTag = (param) => (dispatch) => {
+  dispatch({ type: SUBTITLE_SELECTED_TAG, payload: param });
+};
+
+export const getTotalArticle = (param) => (dispatch) => {
+  dispatch({ type: TOTAL_ARTICLE, payload: param });
 };

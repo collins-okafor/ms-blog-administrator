@@ -16,7 +16,6 @@ const AuthService = {
   login: async (param) => {
     return APIs.post(`/api/auth/login`, param)
       .then((data) => {
-        console.log(data, "see");
         if (
           data?.data?.data?.message === "success" &&
           data?.data?.data?.admin

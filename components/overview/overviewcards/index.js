@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { StyledOverView } from "./styles/styles";
 import { CiNoWaitingSign } from "react-icons/ci";
-import { MdPublishedWithChanges, MdOutlineArticle } from "react-icons/md";
+import {
+  MdPublishedWithChanges,
+  MdOutlineArticle,
+  MdNewLabel,
+} from "react-icons/md";
 import Ads from "../../../universal-Components/postAdsStructure/ads";
 import Post from "../../../universal-Components/postAdsStructure/post";
 import PostVerify from "../../../universal-Components/postAdsStructure/postVerify";
@@ -11,6 +15,7 @@ import DashBoardServices from "../../../services/dashboardServices";
 import {
   getDashboardAllArticle,
   getDashboardLoader,
+  getNew,
   getPending,
   getPublish,
   getTotal,
@@ -43,6 +48,8 @@ const CardOverview = () => {
 
   const total = useSelector((state) => state.DashboardReducers.total);
 
+  const newDetails = useSelector((state) => state.DashboardReducers.new);
+
   const fetchAllArticle = async () => {
     dispatch(getDashboardLoader(true));
     const constants = await Promise.all([
@@ -52,6 +59,7 @@ const CardOverview = () => {
       DashBoardServices.PendingArticle(),
       DashBoardServices.PublishArticle(),
       DashBoardServices.TotalArticle(),
+      DashBoardServices.NewArticle(),
     ])
       .then((data) => {
         return data;
@@ -89,6 +97,7 @@ const CardOverview = () => {
       dispatch(getPending(constants[3]?.data));
       dispatch(getPublish(constants[4]?.data));
       dispatch(getTotal(constants[5]?.data));
+      dispatch(getNew(constants[6]?.data));
       dispatch(getDashboardLoader(false));
     }
   };
@@ -107,50 +116,61 @@ const CardOverview = () => {
 
       {!loading && (
         <>
+          <div className="cardContainer">
+            <Link href="/dashboard/allPosts" className="card">
+              <div className="text">
+                <h5>All posts</h5>
+                <h3>{total}</h3>
+                <p>Total post in the system</p>
+              </div>
+              <div className="iconNum">
+                <MdOutlineArticle
+                  className="icon"
+                  style={{ color: "#E89B2D" }}
+                />
+              </div>
+            </Link>
+            <Link href="/dashboard/pending" className="card">
+              <div className="text">
+                <h5>Pending posts</h5>
+                <h3>{pending || 0}</h3>
+                <p>pending post in the system</p>
+              </div>
+              <div className="iconNum">
+                <CiNoWaitingSign className="icon" style={{ color: "red" }} />
+              </div>
+            </Link>
+            <Link href="/dashboard/new" className="card">
+              <div className="text">
+                <h5>New posts</h5>
+                <h3>{newDetails || 0}</h3>
+                <p>New post in the system</p>
+              </div>
+              <div className="iconNum">
+                <MdNewLabel className="icon" style={{ color: "white" }} />
+              </div>
+            </Link>
+
+            <Link href="/dashboard/published" className="card">
+              <div className="text">
+                <h5>Published posts</h5>
+                <h3>{publish || 0}</h3>
+                <p>Publish post in the system</p>
+              </div>
+              <div className="iconNum">
+                <MdPublishedWithChanges
+                  className="icon"
+                  style={{ color: "green" }}
+                />
+              </div>
+            </Link>
+          </div>
           <div className="left">
-            <div className="cardContainer">
-              <Link href="/dashboard/allPosts" className="card">
-                <div className="text">
-                  <h5>All posts</h5>
-                  <h3>{total}</h3>
-                  <p>Total post in the system</p>
-                </div>
-                <div className="iconNum">
-                  <MdOutlineArticle
-                    className="icon"
-                    style={{ color: "#E89B2D" }}
-                  />
-                </div>
-              </Link>
-              <Link href="/dashboard/pending" className="card">
-                <div className="text">
-                  <h5>Pending posts</h5>
-                  <h3>{pending || 0}</h3>
-                  <p>pending post in the system</p>
-                </div>
-                <div className="iconNum">
-                  <CiNoWaitingSign className="icon" style={{ color: "red" }} />
-                </div>
-              </Link>
-              <Link href="/dashboard/published" className="card">
-                <div className="text">
-                  <h5>Published posts</h5>
-                  <h3>{publish || 0}</h3>
-                  <p>Publish post in the system</p>
-                </div>
-                <div className="iconNum">
-                  <MdPublishedWithChanges
-                    className="icon"
-                    style={{ color: "green" }}
-                  />
-                </div>
-              </Link>
-            </div>
             <PostVerify />
           </div>
-          <div className="adsDisplay">
+          {/* <div className="adsDisplay">
             <Ads />
-          </div>
+          </div> */}
         </>
       )}
     </StyledOverView>

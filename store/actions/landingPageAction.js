@@ -1,4 +1,9 @@
-import { SHOW_HIDE_SIDEBAR, SYSTEM_MODE, GET_ALL_ARTICLE } from "../type";
+import {
+  SHOW_HIDE_SIDEBAR,
+  SYSTEM_MODE,
+  GET_ALL_ARTICLE,
+  USER_LOGIN_DETIALS,
+} from "../type";
 
 export const getSystemMode = (param) => (dispatch) => {
   dispatch({ type: SYSTEM_MODE, payload: param });

@@ -9,9 +9,9 @@ const PostAdsStructure = () => {
       <div className="post">
         <Post />
       </div>
-      <div className="ads">
+      {/* <div className="ads">
         <Ads />
-      </div>
+      </div> */}
     </PostAdsStructureDiv>
   );
 };

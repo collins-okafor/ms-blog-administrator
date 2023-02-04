@@ -45,15 +45,30 @@ const fade = keyframes`
 
 export const DashbardSideBarDiv = styled.div`
   background-color: ${({ theme }) => theme.BaseColor};
-  width: 19%;
+  width: 22%;
   height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 8;
-  display: ${({ reduceSideBar }) => (reduceSideBar ? "none" : "block")};
+  overflow-y: auto;
+  /* display: ${({ reduceSideBar }) => (reduceSideBar ? "none" : "block")}; */
   animation: ${({ reduceSideBar }) => (reduceSideBar ? right : left)} 0.4s;
   transition: all 2s ease;
+
+  &::-webkit-scrollbar-track {
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #e89b2d;
+  }
 
   .firstSection {
     display: flex;
@@ -176,6 +191,7 @@ export const DashbardSideBarDiv = styled.div`
   @media screen and (max-width: 1024px) {
     width: 30%;
     display: ${({ reduceSideBar }) => (reduceSideBar ? "block" : "none")};
+    z-index: 19;
   }
 
   @media screen and (max-width: 741px) {

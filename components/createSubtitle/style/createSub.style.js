@@ -23,7 +23,7 @@ export const SubTitleDiv = styled.div`
   margin: 40px 0px;
 
   .create_subtitle_wrapper {
-    width: 70%;
+    width: 90%;
 
     .create_subtitle {
       width: 100%;

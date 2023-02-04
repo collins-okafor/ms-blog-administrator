@@ -6,7 +6,7 @@ export const StyledPublishedPost = styled.div`
   justify-content: space-between;
 
   .left {
-    width: 65%;
+    width: 90%;
     @media (max-width: 650px) {
       width: 100%;
     }

@@ -10,6 +10,7 @@ export const NavListDiv = styled.div`
   top: 0;
   z-index: 5;
   transition: all 1.5s;
+  white-space: nowrap;
 
   .selected {
     border: 1px solid ${({ theme }) => theme.secondaryColor};
@@ -31,5 +32,19 @@ export const NavListDiv = styled.div`
       line-height: 16px;
       transition: all 1.5s;
     }
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #e89b2d;
   }
 `;

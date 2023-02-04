@@ -16,6 +16,10 @@ const AdminCard = () => {
   const [change, setChange] = useState(false);
   const getAdmin = useSelector((state) => state.createAdmin.getAdmin);
 
+  const myUserDetails = useSelector(
+    (state) => state.DashboardReducers.userStore
+  );
+
   const HandleEdit = (item) => {
     dispatch(getAllAdminFormValue({ ...item }));
     dispatch(getEditAdmin(true));
@@ -26,21 +30,25 @@ const AdminCard = () => {
   };
 
   const HandleDelete = (item) => {
-    createAdminService
-      .DeletAdmin({ ...item })
-      .then((data) => {
-        const findSpecial = getAdmin.findIndex((data) => data._id === item._id);
+    if (myUserDetails?.admin === "root") {
+      createAdminService
+        .DeletAdmin({ ...item })
+        .then((data) => {
+          const findSpecial = getAdmin.findIndex(
+            (data) => data._id === item._id
+          );
 
-        getAdmin.splice(findSpecial, 1);
+          getAdmin.splice(findSpecial, 1);
 
-        toast("successfully deleted");
+          toast("successfully deleted");
 
-        setChange(!change);
-      })
-      .catch((err) => {
-        console.log(err);
-        throw err;
-      });
+          setChange(!change);
+        })
+        .catch((err) => {
+          console.log(err);
+          throw err;
+        });
+    }
   };
 
   return (

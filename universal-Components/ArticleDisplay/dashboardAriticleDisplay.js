@@ -300,7 +300,21 @@ const DashboardArticleDisplay = () => {
         </div>
         <div className={"articleWrapper__title"}>
           <div className={"articleWrapper__titleDetails"}>
-            <p className={"articleWrapper__titleDetailsItem"}>
+            <p
+              className={"articleWrapper__titleDetailsItem"}
+              onSelectStart={(e) => {
+                e.preventDefault();
+                return false;
+              }}
+              onPaste={(e) => {
+                e.preventDefault();
+                return false;
+              }}
+              onCopy={(e) => {
+                e.preventDefault();
+                return false;
+              }}
+            >
               {/* {HTMLReactParser(
                 getSingleArticle?.article && getSingleArticle?.article
               )} */}
@@ -331,7 +345,24 @@ const DashboardArticleDisplay = () => {
         </div>
 
         <div className={"articleWrapper__articleDetails"}>
-          <p className={"articleWrapper__articleDetailsItem"}>
+          <p
+            className={"articleWrapper__articleDetailsItem"}
+            onSelectStart={(e) => {
+              e.preventDefault();
+              return false;
+            }}
+            onPaste={(e) => {
+              e.preventDefault();
+              return false;
+            }}
+            onCopy={(e) => {
+              e.preventDefault();
+              return false;
+            }}
+            // onCut="return false"
+            // onDrag="return false"
+            // onDrop="return false"
+          >
             {HTMLReactParser(HTMLReactParser(getSingleArticle?.article))}
           </p>
         </div>
@@ -481,9 +512,9 @@ const DashboardArticleDisplay = () => {
           </div>
         )}
       </div>
-      <div className={"articleWrapperAds"}>
+      {/* <div className={"articleWrapperAds"}>
         <Ads />
-      </div>
+      </div> */}
     </ArticleDisplayDiv>
   );
 };

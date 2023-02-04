@@ -18,6 +18,9 @@ import DashBoardServices from "../services/dashboardServices";
 import { ToastContainer, toast } from "react-toastify";
 import {
   getDashboardAllArticle,
+  getDashboardSubtitle,
+  getSubtitleLoader,
+  getSubtitleSelectedTag,
   getUserStore,
 } from "../store/actions/dashboardAction";
 import "../lib/globalStyles/global.css";
@@ -47,9 +50,12 @@ function MyApp({ Component, pageProps }) {
     typeof window !== "undefined" && window.localStorage.getItem("token");
 
   const fetchAllArticle = async () => {
+    dispatch(getSubtitleLoader(true));
+
     const constants = await Promise.all([
       DashBoardServices.GetAllDashArticle(0),
       DashBoardServices.getUserDetails(),
+      DashBoardServices.getTags(),
     ])
       .then((data) => {
         return data;
@@ -58,8 +64,13 @@ function MyApp({ Component, pageProps }) {
         throw err;
       });
 
-    dispatch(getDashboardAllArticle(constants[0]));
-    dispatch(getUserStore(constants[1]));
+    if (constants) {
+      dispatch(getDashboardAllArticle(constants[0]));
+      dispatch(getUserStore(constants[1]));
+      dispatch(getSubtitleSelectedTag(constants[2][0]?.title));
+      dispatch(getDashboardSubtitle(constants[2]));
+      dispatch(getSubtitleLoader(false));
+    }
   };
 
   useEffect(() => {
@@ -95,9 +106,9 @@ function MyApp({ Component, pageProps }) {
             <link rel="shortcut icon" href="/MP.png" />
           </Head>
 
-          {/* {router.asPath.includes("dashboard") && <DashboardSideBar />} */}
+          {router.asPath.includes("dashboard") && <DashboardSideBar />}
 
-          {router.asPath.includes("dashboard") && <DashboardSideBarMin />}
+          {/* {router.asPath.includes("dashboard") && <DashboardSideBarMin />} */}
 
           {router.asPath.includes("dashboard") && <DashboardNavBar />}
 

@@ -28,9 +28,9 @@ const TabDisplay = () => {
           <div className="leftContent">
             <ViewProfileCard />
           </div>
-          <div className="rightContent">
+          {/* <div className="rightContent">
             <Ads />
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="tabTwoDisplay">
