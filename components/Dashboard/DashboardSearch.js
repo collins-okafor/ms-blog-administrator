@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import photoTwo from "../../assets/Images/indesignSeven.jpg";
 import SearchComp from "../../universal-Components/search";
 import { useRouter } from "next/router";
 import { getLoginPageCounter } from "../../store/actions/authAction";

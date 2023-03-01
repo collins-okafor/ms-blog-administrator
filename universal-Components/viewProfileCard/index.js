@@ -25,8 +25,8 @@ const ViewProfileCard = () => {
           <NotFound text={"not following anyone"} />
         ))}
 
-      {allFollowerDetails.length > 0 &&
-        allFollowerDetails.map((user, id) => (
+      {allFollowerDetails?.length > 0 &&
+        allFollowerDetails?.map((user, id) => (
           <div className="cardListSearchBody" key={id}>
             <div className="cardListSearchBodyImageWrapper">
               <div className="cardListSearchBodyImageBody">

@@ -48,6 +48,19 @@ export const CreateDiv = styled.div`
     margin: 0px 0px 30px 0px;
 
     .title {
+      width: 210px;
+
+      p {
+        font-family: "Poppins", sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        font-style: normal;
+        color: ${({ theme }) => theme.textColor};
+        transition: all 1.5s;
+      }
+    }
+
+    .adminType {
       p {
         font-family: "Poppins", sans-serif;
         font-size: 16px;

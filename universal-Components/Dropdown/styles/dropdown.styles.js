@@ -46,7 +46,7 @@ export const DropdownWrapperDiv = styled.div`
       align-items: center;
       justify-content: center;
       .searchIcon {
-        color: #98a2b3;
+        color: ${({ theme }) => theme.textColor};
         font-size: 18px;
       }
     }
@@ -62,6 +62,7 @@ export const DropdownWrapperDiv = styled.div`
     overflow-y: auto;
     position: absolute;
     z-index: 10;
+    background-color: ${({ theme }) => theme.primaryColor};
     border: 1px solid ${({ theme }) => theme.textColor};
     /* background-color: #fff; */
 

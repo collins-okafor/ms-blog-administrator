@@ -9,7 +9,7 @@ const Stories = {
     })
       .then((data) => {
         if (data?.data?.message === "success") {
-          return data?.data?.data;
+          return data?.data;
         }
       })
       .catch((err) => {

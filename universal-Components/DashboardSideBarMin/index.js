@@ -13,7 +13,7 @@ import {
   MdOutlineClose,
   MdNewLabel,
 } from "react-icons/md";
-import Logo from "../../assets/Icons/Blogger-logo-01.webp";
+import Logo from "../../assets/Icons/Mariam_Blog_White.png";
 import Profile from "../../assets/Icons/avatar-profile-photo.png";
 import Image from "next/image";
 import { useRouter } from "next/router";

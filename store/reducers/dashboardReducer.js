@@ -21,6 +21,10 @@ import {
   SUBTITLE_LOADER_CONFIGURATION,
   SUBTITLE_SELECTED_TAG,
   TOTAL_ARTICLE,
+  MY_STORIES_DETAILS,
+  MY_STORIES_LOADER,
+  SUBTITLE_SELECTED_SUB_TAG,
+  MY_FOLLOWERS,
 } from "../type";
 
 const initialState = {
@@ -47,6 +51,13 @@ const initialState = {
   subtitleLoaderConfiguration: false,
   subtitleSelectedTag: "",
   totalArticle: 0,
+
+  myStoriesDetails: {},
+  myStoriesLoader: false,
+
+  subtitleSelectedSubTag: "",
+
+  myFollowers: [],
 };
 
 const DashboardReducers = (state = initialState, action) => {
@@ -200,10 +211,38 @@ const DashboardReducers = (state = initialState, action) => {
       };
     }
 
+    case SUBTITLE_SELECTED_SUB_TAG: {
+      return {
+        ...state,
+        subtitleSelectedSubTag: payload,
+      };
+    }
+
     case TOTAL_ARTICLE: {
       return {
         ...state,
         totalArticle: payload,
+      };
+    }
+
+    case MY_STORIES_DETAILS: {
+      return {
+        ...state,
+        myStoriesDetails: payload,
+      };
+    }
+
+    case MY_FOLLOWERS: {
+      return {
+        ...state,
+        myFollowers: payload,
+      };
+    }
+
+    case MY_STORIES_LOADER: {
+      return {
+        ...state,
+        myStoriesLoader: payload,
       };
     }
 

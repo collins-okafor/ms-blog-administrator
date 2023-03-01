@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React, { memo } from "react";
-import Logo from "../../assets/Icons/Blogger-logo-01.webp";
+import Logo from "../../assets/Icons/Mariam_Blog_White.png";
 import { NavUpLayer } from "./styles/navUpLayer";
 import { withTheme } from "styled-components";
 import SystemMode from "../../components/SystemMode";

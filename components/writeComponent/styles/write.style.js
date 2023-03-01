@@ -29,6 +29,35 @@ export const WriteDiv = styled.div`
     margin: 15px 0px;
     padding: 30px 0px;
 
+    .clearEditArticle {
+      margin-bottom: 30px;
+
+      button {
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        font-style: normal;
+        color: ${({ theme }) => theme.primaryColor};
+        line-height: 16px;
+        transition: all 1.5s;
+        border: none;
+        outline: none;
+        background-color: ${({ theme }) => theme.secondaryColor};
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.8;
+        }
+
+        &:disabled {
+          cursor: not-allowed;
+          background-color: grey;
+        }
+      }
+    }
+
     .wirteWrappperBodyFirstLine {
       display: flex;
       flex-wrap: wrap;
@@ -102,67 +131,106 @@ export const WriteDiv = styled.div`
       }
     }
 
-    .wirteWrappperBodySecondLine {
+    .writeWrapperBodySecondLineWrapperSection {
       margin: 40px 0px 10px 0px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
 
-      .wirteWrappperBodySecondLineText {
-        font-family: "Poppins", sans-serif;
-        font-size: 16px;
-        font-weight: 500;
-        font-style: normal;
-        color: ${({ theme }) => theme.textColor};
-        line-height: 16px;
-        transition: all 1.5s;
-      }
+      .wirteWrappperBodySecondLine {
+        width: 48%;
+        overflow: hidden;
 
-      .wirteWrappperBodySecondLineFile {
-        margin: 20px 0px 0px 0px;
-        position: relative;
-        width: 30%;
-        cursor: pointer;
+        .wirteWrappperBodySecondLineText {
+          font-family: "Poppins", sans-serif;
+          font-size: 16px;
+          font-weight: 500;
+          font-style: normal;
+          color: ${({ theme }) => theme.textColor};
+          line-height: 16px;
+          transition: all 1.5s;
+        }
 
-        .wirteWrappperBodySecondLineFileView {
-          display: flex;
-          align-items: center;
+        .wirteWrappperBodySecondLineFile {
+          margin: 20px 0px 0px 0px;
+          position: relative;
+          width: 30%;
+          cursor: pointer;
 
-          .wirteWrappperBodySecondLineFileViewIcon {
-            margin-right: 10px;
-            .wirteWrappperBodySecondLineFileViewIconBody {
-              display: flex;
-              align-items: center;
-              justify-content: center;
+          .wirteWrappperBodySecondLineFileView {
+            display: flex;
+            align-items: center;
 
-              .wirteWrappperBodySecondLineFileViewIconItem {
-                font-size: 34px;
+            .wirteWrappperBodySecondLineFileViewIcon {
+              margin-right: 10px;
+              .wirteWrappperBodySecondLineFileViewIconBody {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .wirteWrappperBodySecondLineFileViewIconItem {
+                  font-size: 34px;
+                  color: ${({ theme }) => theme.textColor};
+                }
+              }
+            }
+
+            .wirteWrappperBodySecondLineFileViewText {
+              p {
+                font-family: "Poppins", sans-serif;
+                font-size: 14px;
+                font-weight: 500;
+                font-style: normal;
                 color: ${({ theme }) => theme.textColor};
+                line-height: 16px;
+                transition: all 1.5s;
               }
             }
           }
 
-          .wirteWrappperBodySecondLineFileViewText {
-            p {
-              font-family: "Poppins", sans-serif;
-              font-size: 14px;
-              font-weight: 500;
-              font-style: normal;
-              color: ${({ theme }) => theme.textColor};
-              line-height: 16px;
-              transition: all 1.5s;
-            }
+          .wirteWrappperBodySecondLineFileInput {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
           }
-        }
 
-        .wirteWrappperBodySecondLineFileInput {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          opacity: 0;
+          @media screen and (max-width: 500px) {
+            width: 100%;
+          }
         }
 
         @media screen and (max-width: 500px) {
           width: 100%;
+        }
+      }
+
+      .sub_wirteWrappperBodyFirstLineTag {
+        width: 48%;
+
+        .sub_wirteWrappperBodyFirstLineTagText {
+          p {
+            font-family: "Poppins", sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            font-style: normal;
+            color: ${({ theme }) => theme.textColor};
+            line-height: 16px;
+            margin-bottom: 5px;
+            transition: all 1.5s;
+          }
+        }
+
+        .sub_wirteWrappperBodyFirstLineDropdown {
+          margin: 10px 0px 0px 0px;
+        }
+
+        @media screen and (max-width: 500px) {
+          width: 100%;
+          margin: 30px 0px 0px 0px;
         }
       }
     }
@@ -194,7 +262,7 @@ export const WriteDiv = styled.div`
     text-align: right;
     margin: 30px 0px 0px 0px;
     button {
-      font-family: "Poppins", sans-serif;
+      font-family: "PoppclearEditArticleclearEditArticleins", sans-serif;
       font-size: 14px;
       font-weight: 500;
       font-style: normal;

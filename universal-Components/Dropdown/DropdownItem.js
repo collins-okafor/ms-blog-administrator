@@ -18,7 +18,7 @@ const DropdownItem = forwardRef(
                   select === item.title && "containerColor"
                 }`}
                 onClick={() => {
-                  HandleClickCoin(item);
+                  HandleClickCoin(item, key);
                   HandleShowDropDownReturn();
                 }}
               >

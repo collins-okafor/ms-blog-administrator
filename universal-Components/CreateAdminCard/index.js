@@ -51,6 +51,8 @@ const AdminCard = () => {
     }
   };
 
+  console.log(getAdmin, "stated");
+
   return (
     <CreateDiv>
       <div className="Switch">
@@ -66,6 +68,11 @@ const AdminCard = () => {
           <div className="title">
             <p>{item.username}</p>
           </div>
+
+          <div className="adminType">
+            <p>{item.admin}</p>
+          </div>
+
           <div className="action">
             <div className="edit" onClick={() => HandleEdit(item)}>
               <FiEdit className="edit_icon" />

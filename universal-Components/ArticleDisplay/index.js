@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Ads from "../postAdsStructure/ads";
 import { ArticleDisplayDiv } from "./styles/articleDisplay.style";
 import image1 from "../../assets/Images/Avatar.png";
@@ -9,18 +9,30 @@ import {
   BsFillHandThumbsUpFill,
   BsFillHandThumbsDownFill,
 } from "react-icons/bs";
-import photoSix from "../../assets/Images/about-us.jpg";
-import { FaCommentDots } from "react-icons/fa";
+import photoSix from "../../assets/Icons/avatar-profile-photo.png";
+import {
+  FaCommentDots,
+  FaFacebook,
+  FaLinkedin,
+  FaTwitter,
+  FaWhatsapp,
+} from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import HTMLReactParser from "html-react-parser";
 import { useRouter } from "next/router";
 import { getLoginPageCounter } from "../../store/actions/authAction";
+import Link from "next/link";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 const ArticleDisplay = () => {
   const router = useRouter();
+  const refSocial = useRef();
   const dispatch = useDispatch();
   const [showComment, setShowComment] = useState(false);
+
+  const [dropdownSocial, setDropdownSocial] = useState("");
+  const [showDropdownSocial, setShowDropdownSocial] = useState(false);
 
   let auth =
     typeof window !== "undefined" && window.localStorage.getItem("token");
@@ -66,6 +78,18 @@ const ArticleDisplay = () => {
     }
   };
 
+  const HandleDropdownSocial = (item) => {
+    if (!showDropdownSocial) {
+      setDropdownSocial(item._id);
+      setShowDropdownSocial(true);
+    } else {
+      setDropdownSocial("");
+      setShowDropdownSocial(false);
+    }
+  };
+
+  useOnClickOutside(refSocial, () => setDropdownSocial(""));
+
   return (
     <ArticleDisplayDiv>
       <div className={"articleWrapper"}>
@@ -98,6 +122,69 @@ const ArticleDisplay = () => {
             </div>
           </div>
           <div className={"articleWrapper__headerProfileSectionState"}>
+            <div className="sharing_wrapper">
+              <div
+                className="sharingbody"
+                onClick={() => HandleDropdownSocial(getSingleArticle)}
+              >
+                <FaShareAlt className="sharingicon" />
+              </div>
+
+              {dropdownSocial === getSingleArticle?._id && (
+                <div className="SocialWrapper" ref={refSocial}>
+                  <div className="SocialBody">
+                    <Link
+                      href={`https://www.facebook.com/sharer.php?u=https://www.mirianpost.com/${getSingleArticle?._id}`}
+                      target={"blank"}
+                    >
+                      <div className="SocialContent">
+                        <FaFacebook className="SocialIcon" />
+                      </div>
+                    </Link>
+                  </div>
+
+                  <div className="SocialBody">
+                    <Link
+                      href={`https://api.whatsapp.com/send?text=${getSingleArticle?.title} https://www.mirianpost.com/${getSingleArticle?._id}`}
+                      target={"blank"}
+                    >
+                      <div className="SocialContent">
+                        <FaWhatsapp className="SocialIcon" />
+                      </div>
+                    </Link>
+                  </div>
+
+                  <div className="SocialBody">
+                    <Link
+                      href={`https://www.linkedin.com/shareArticle?url=ttps://www.mirianpost.com/${getSingleArticle?._id}&title=${getSingleArticle?.title}`}
+                      target={"blank"}
+                    >
+                      <div className="SocialContent">
+                        <FaLinkedin className="SocialIcon" />
+                      </div>
+                    </Link>
+                  </div>
+
+                  <div className="SocialBody">
+                    <Link
+                      href={`https://twitter.com/share?url=https://www.mirianpost.com/${getSingleArticle?._id}&text=${getSingleArticle?.title}`}
+                      target={"blank"}
+                    >
+                      <div className="SocialContent">
+                        <FaTwitter className="SocialIcon" />
+                      </div>
+                    </Link>
+                  </div>
+
+                  {/* <div className="SocialBody">
+                          <div className="SocialContent">
+                            <FaInstagram className="SocialIcon" />
+                          </div>
+                        </div> */}
+                </div>
+              )}
+            </div>
+
             <div
               className={"articleWrapper__headerProfileSectionStateSave"}
               onClick={HandleShowComment}
@@ -195,7 +282,71 @@ const ArticleDisplay = () => {
               </div>
             </div>
           </div>
+
           <div className={"articleWrapper__SocialMedaiStatus"}>
+            <div className="sharing_wrapper">
+              <div
+                className="sharingbody"
+                onClick={() => HandleDropdownSocial(getSingleArticle)}
+              >
+                <FaShareAlt className="sharingicon" />
+              </div>
+
+              {dropdownSocial === getSingleArticle?._id && (
+                <div className="SocialWrapper" ref={refSocial}>
+                  <div className="SocialBody">
+                    <Link
+                      href={`https://www.facebook.com/sharer.php?u=https://www.mirianpost.com/${getSingleArticle?._id}`}
+                      target={"blank"}
+                    >
+                      <div className="SocialContent">
+                        <FaFacebook className="SocialIcon" />
+                      </div>
+                    </Link>
+                  </div>
+
+                  <div className="SocialBody">
+                    <Link
+                      href={`https://api.whatsapp.com/send?text=${getSingleArticle?.title} https://www.mirianpost.com/${getSingleArticle?._id}`}
+                      target={"blank"}
+                    >
+                      <div className="SocialContent">
+                        <FaWhatsapp className="SocialIcon" />
+                      </div>
+                    </Link>
+                  </div>
+
+                  <div className="SocialBody">
+                    <Link
+                      href={`https://www.linkedin.com/shareArticle?url=ttps://www.mirianpost.com/${getSingleArticle?._id}&title=${getSingleArticle?.title}`}
+                      target={"blank"}
+                    >
+                      <div className="SocialContent">
+                        <FaLinkedin className="SocialIcon" />
+                      </div>
+                    </Link>
+                  </div>
+
+                  <div className="SocialBody">
+                    <Link
+                      href={`https://twitter.com/share?url=https://www.mirianpost.com/${getSingleArticle?._id}&text=${getSingleArticle?.title}`}
+                      target={"blank"}
+                    >
+                      <div className="SocialContent">
+                        <FaTwitter className="SocialIcon" />
+                      </div>
+                    </Link>
+                  </div>
+
+                  {/* <div className="SocialBody">
+                          <div className="SocialContent">
+                            <FaInstagram className="SocialIcon" />
+                          </div>
+                        </div> */}
+                </div>
+              )}
+            </div>
+
             <div
               className={"articleWrapper__SocialMedaiStatusSaveIconBody"}
               onClick={HandleShowComment}

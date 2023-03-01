@@ -5,9 +5,9 @@ import DashBoardServices from "../../services/dashboardServices";
 import Stories from "../../services/stories";
 import { getDynamicPost } from "../../store/actions/generalAction";
 import Loader1 from "../../universal-Components/Loaders/loader1";
-import PostAdsStructure from "../../universal-Components/postAdsStructure";
 import { StoriesDiv } from "./styles/stories.style";
 import SpinnerMain from "../../universal-Components/Spinner/Spinner";
+import MyStoriesPostAdsStructure from "../../universal-Components/postAdsStructure/myStoriesIndex";
 
 const StoriesPage = () => {
   const dispatch = useDispatch();
@@ -44,6 +44,7 @@ const StoriesPage = () => {
       item["followed"] = "my";
     });
 
+    console.log(constants[0], "nexted so");
     dispatch(getDynamicPost(constants[0]?.data));
     setTotalArticle(constants[0]?.count);
     setStories(false);
@@ -113,7 +114,7 @@ const StoriesPage = () => {
               <h3>Your stories</h3>
             </div>
             <div>
-              <PostAdsStructure />
+              <MyStoriesPostAdsStructure />
             </div>
           </StoriesDiv>
         </InfiniteScroll>

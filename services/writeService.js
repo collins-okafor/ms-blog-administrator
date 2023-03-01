@@ -12,6 +12,43 @@ const WriteService = {
         throw new Error(err);
       });
   },
+
+  getEditArticle: (id, payload) => {
+    console.log(id, "Ser");
+    return APIs.patch(`/api/write/${id}`, payload)
+      .then((data) => {
+        if (data?.data?.message === "success") {
+          return data?.data?.data;
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+
+  getEditArticle: (id, payload) => {
+    return APIs.patch(`/api/write/${id}`, payload)
+      .then((data) => {
+        if (data?.data?.message === "success") {
+          return data?.data?.data;
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+
+  ViewArticle: (id) => {
+    return APIs.patch(`/api/write/views/${id}`)
+      .then((data) => {
+        if (data?.data?.message === "success") {
+          return data?.data?.data;
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
 };
 
 export default WriteService;

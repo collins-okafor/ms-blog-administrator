@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import dynamic from "next/dynamic";
 import Dropdown from "../../universal-Components/Dropdown";
@@ -12,6 +12,12 @@ import { toast } from "react-toastify";
 import DashBoardServices from "../../services/dashboardServices";
 import SpinnerNormal from "../../universal-Components/Spinner/SpinnerNormal";
 import SpinnerMain from "../../universal-Components/Spinner/Spinner";
+import SubDropdown from "../../universal-Components/SubDropdown";
+import {
+  getMyStoriesDetails,
+  getMyStoriesLoader,
+} from "../../store/actions/dashboardAction";
+import HTMLReactParser from "html-react-parser";
 // import MyEditor from "../../universal-Components/myEditor";
 
 const MyEditor = dynamic(() => import("../../universal-Components/myEditor"), {
@@ -35,10 +41,49 @@ const WriteComponent = () => {
     (state) => state.DashboardReducers.dashboard_Subtitle
   );
 
-  const [dropItem, setDropItem] = useState("Select Details");
+  const [dropItem, setDropItem] = useState({ title: "Select Tag" });
 
-  const HandleClickDropDown = (item) => {
-    setDropItem(item.title);
+  const [subDopItem, setSubDropItem] = useState({ title: "Select Sub_Tag" });
+
+  const myStoriesDetails = useSelector(
+    (state) => state.DashboardReducers.myStoriesDetails
+  );
+
+  const myStoriesLoader = useSelector(
+    (state) => state.DashboardReducers.myStoriesLoader
+  );
+
+  useEffect(() => {
+    if (Object.keys(myStoriesDetails).length > 0) {
+      setForm(myStoriesDetails);
+      setImageFile({ name: myStoriesDetails?.cover_pic });
+      setDropItem({ title: myStoriesDetails?.tag });
+      setSubDropItem({
+        title: myStoriesDetails?.subtag
+          ? myStoriesDetails?.subtag
+          : "Select Sub_Tag",
+      });
+      setData(`${HTMLReactParser(myStoriesDetails?.article)}`);
+    } else {
+      dispatch(getMyStoriesDetails({}));
+
+      setForm({});
+      setImageFile();
+      setDropItem({ title: "Select Tags" });
+      setSubDropItem({ title: "Select Sub_Tag" });
+      setData(``);
+
+      dispatch(getMyStoriesLoader(false));
+    }
+  }, []);
+
+  const HandleClickDropDown = (item, key) => {
+    setDropItem({ title: item.title, index: key });
+    setSubDropItem({ title: "Select Sub_Tag" });
+  };
+
+  const HandleClickSubDropDown = (item) => {
+    setSubDropItem({ title: item?.subcontent });
   };
 
   function getbase64(file) {
@@ -96,9 +141,14 @@ const WriteComponent = () => {
 
     dispatch({ type: AUTHLOADER, payload: true });
 
-    if (data && form.title && form.cover_pic && dropItem) {
+    if (
+      data &&
+      form.title &&
+      form.cover_pic &&
+      dropItem?.title !== "Select Tag"
+    ) {
       const payload = {
-        tag: dropItem,
+        tag: dropItem?.title,
         title: form?.title,
         cover_pic: form.cover_pic,
         cover_pic_id: form.cover_pic_id,
@@ -110,7 +160,46 @@ const WriteComponent = () => {
         .then((data) => {
           toast("posted successfully");
           dispatch({ type: AUTHLOADER, payload: false });
-          console.log(data);
+
+          router.push("/dashboard/stories");
+        })
+        .catch((err) => {
+          throw err;
+        });
+    } else {
+      toast.error("all filed my be filled !", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      dispatch({ type: AUTHLOADER, payload: false });
+    }
+  };
+
+  const HandleEditArticle = (e) => {
+    e.preventDefault();
+
+    dispatch({ type: AUTHLOADER, payload: true });
+
+    if (
+      data &&
+      form.title &&
+      form.cover_pic &&
+      dropItem?.title !== "Select Tag"
+    ) {
+      const payload = {
+        tag: dropItem?.title,
+        subtag: subDopItem?.title,
+        title: form?.title,
+        cover_pic: form.cover_pic,
+        cover_pic_id: form.cover_pic_id,
+        article_Image_cloud: imageState,
+        article: data,
+      };
+
+      WriteService.getEditArticle(myStoriesDetails?._id, payload)
+        .then((data) => {
+          toast("Edited successfully");
+          dispatch({ type: AUTHLOADER, payload: false });
+
           router.push("/dashboard/stories");
         })
         .catch((err) => {
@@ -129,11 +218,36 @@ const WriteComponent = () => {
       <div className="wirteWrappperHeader">
         <p>Write An Article</p>
       </div>
+
       <div className="wirteWrappperBody">
+        {Object.keys(myStoriesDetails).length > 0 && (
+          <div className="clearEditArticle">
+            <button
+              onClick={() => {
+                dispatch(getMyStoriesDetails({}));
+
+                setForm({});
+                setImageFile();
+                setDropItem({ title: "Select Tags" });
+                setSubDropItem({ title: "Select Sub_Tag" });
+                setData(``);
+
+                dispatch(getMyStoriesLoader(false));
+              }}
+            >
+              Create and Article
+            </button>
+          </div>
+        )}
+
         <div className="wirteWrappperBodyFirstLine">
           <div className="wirteWrappperBodyFirstLineTitle">
             <p>Title</p>
-            <textarea onChange={handleTextChange} name="title"></textarea>
+            <textarea
+              value={form?.title || ""}
+              onChange={handleTextChange}
+              name="title"
+            ></textarea>
           </div>
           <div className="wirteWrappperBodyFirstLineTag">
             <div className="wirteWrappperBodyFirstLineTagText">
@@ -142,41 +256,64 @@ const WriteComponent = () => {
             <div className="wirteWrappperBodyFirstLineDropdown">
               <Dropdown
                 list={dashboard_Subtitle}
-                select={dropItem}
+                select={dropItem?.title}
                 HandleClickCoin={HandleClickDropDown}
               />
             </div>
           </div>
         </div>
-        <div className="wirteWrappperBodySecondLine">
-          <p className="wirteWrappperBodySecondLineText">Add a cover Picture</p>
-          <div className="wirteWrappperBodySecondLineFile">
-            <div className="wirteWrappperBodySecondLineFileView">
-              <div className="wirteWrappperBodySecondLineFileViewIcon">
-                <div className="wirteWrappperBodySecondLineFileViewIconBody">
-                  <HiPhotograph className="wirteWrappperBodySecondLineFileViewIconItem" />
+
+        <div className="writeWrapperBodySecondLineWrapperSection">
+          <div className="wirteWrappperBodySecondLine">
+            <p className="wirteWrappperBodySecondLineText">
+              Add a cover Picture
+            </p>
+            <div className="wirteWrappperBodySecondLineFile">
+              <div className="wirteWrappperBodySecondLineFileView">
+                <div className="wirteWrappperBodySecondLineFileViewIcon">
+                  <div className="wirteWrappperBodySecondLineFileViewIconBody">
+                    <HiPhotograph className="wirteWrappperBodySecondLineFileViewIconItem" />
+                  </div>
+                </div>
+
+                <div className="wirteWrappperBodySecondLineFileViewText">
+                  <p>
+                    {loading ? (
+                      <SpinnerMain />
+                    ) : imageFile?.name ? (
+                      imageFile?.name
+                    ) : (
+                      "photo"
+                    )}
+                  </p>
                 </div>
               </div>
-
-              <div className="wirteWrappperBodySecondLineFileViewText">
-                <p>
-                  {loading ? (
-                    <SpinnerMain />
-                  ) : imageFile?.name ? (
-                    imageFile?.name
-                  ) : (
-                    "photo"
-                  )}
-                </p>
-              </div>
+              <input
+                type={"file"}
+                name="cover_pic"
+                className="wirteWrappperBodySecondLineFileInput"
+                onChange={handleTextChange}
+              />
             </div>
-            <input
-              type={"file"}
-              name="cover_pic"
-              className="wirteWrappperBodySecondLineFileInput"
-              onChange={handleTextChange}
-            />
           </div>
+
+          {dropItem?.title !== "Select Tag" &&
+            dashboard_Subtitle[dropItem?.index]?.sub?.length > 0 &&
+            dashboard_Subtitle[dropItem?.index]?.sub !== undefined &&
+            dashboard_Subtitle[dropItem?.index]?.sub !== null && (
+              <div className="sub_wirteWrappperBodyFirstLineTag">
+                <div className="sub_wirteWrappperBodyFirstLineTagText">
+                  <p>SubTag</p>
+                </div>
+                <div className="sb_wirteWrappperBodyFirstLineDropdown">
+                  <SubDropdown
+                    list={dashboard_Subtitle[dropItem?.index]?.sub}
+                    select={subDopItem?.title}
+                    HandleClickCoin={HandleClickSubDropDown}
+                  />
+                </div>
+              </div>
+            )}
         </div>
       </div>
       <div className="wirteWrappperBodyEditor">
@@ -203,27 +340,56 @@ const WriteComponent = () => {
           </div>
         )}
 
-        {AuthLoader ? (
-          <button>
-            <LoaderBob />
-          </button>
+        {myStoriesLoader ? (
+          <>
+            {AuthLoader ? (
+              <button>
+                <LoaderBob />
+              </button>
+            ) : (
+              <button
+                disabled={
+                  AuthLoader ||
+                  docsLoader ||
+                  loading ||
+                  !data ||
+                  !form.title ||
+                  !form.cover_pic ||
+                  dropItem?.title === "Select Tag"
+                    ? true
+                    : false
+                }
+                onClick={HandleEditArticle}
+              >
+                Edit Article
+              </button>
+            )}
+          </>
         ) : (
-          <button
-            disabled={
-              AuthLoader ||
-              docsLoader ||
-              loading ||
-              !data ||
-              !form.title ||
-              !form.cover_pic ||
-              !dropItem
-                ? true
-                : false
-            }
-            onClick={HandleSubmit}
-          >
-            Publish
-          </button>
+          <>
+            {AuthLoader ? (
+              <button>
+                <LoaderBob />
+              </button>
+            ) : (
+              <button
+                disabled={
+                  AuthLoader ||
+                  docsLoader ||
+                  loading ||
+                  !data ||
+                  !form.title ||
+                  !form.cover_pic ||
+                  dropItem?.title === "Select Tag"
+                    ? true
+                    : false
+                }
+                onClick={HandleSubmit}
+              >
+                Publish
+              </button>
+            )}
+          </>
         )}
       </div>
     </WriteDiv>

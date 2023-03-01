@@ -9,8 +9,15 @@ import {
   BsFillHandThumbsUpFill,
   BsFillHandThumbsDownFill,
 } from "react-icons/bs";
-import photoSix from "../../assets/Images/63936.jpg";
-import { FaCommentDots } from "react-icons/fa";
+import photoSix from "../../assets/Images/63936.webp";
+import {
+  FaCommentDots,
+  FaFacebook,
+  FaLinkedin,
+  FaShareAlt,
+  FaTwitter,
+  FaWhatsapp,
+} from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import HTMLReactParser from "html-react-parser";
@@ -27,10 +34,13 @@ import LoaderBob from "../Loaders/loaderBob";
 import { toast } from "react-toastify";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import PDropdown from "../postDropdown/dropdown";
+import Link from "next/link";
 
 const DashboardArticleDisplay = () => {
   const ref = useRef();
   const refSub = useRef();
+  const refSocial = useRef();
+  const refSocialSub = useRef();
   const router = useRouter();
   const dispatch = useDispatch();
   const [change, setChange] = useState(false);
@@ -42,6 +52,12 @@ const DashboardArticleDisplay = () => {
 
   const [showAndCloseSub, setShowAndCloseSub] = useState(false);
   const [closeDropdownSub, setCloseDropdownSub] = useState(false);
+
+  const [dropdownSocial, setDropdownSocial] = useState("");
+  const [showDropdownSocial, setShowDropdownSocial] = useState(false);
+
+  const [dropdownSocialSub, setDropdownSocialSub] = useState("");
+  const [showDropdownSocialSub, setShowDropdownSocialSub] = useState(false);
 
   const HandleChangeComment = (e) => {
     const { name, value } = e.target;
@@ -217,9 +233,33 @@ const DashboardArticleDisplay = () => {
     }
   };
 
+  const HandleDropdownSocial = (item) => {
+    if (!showDropdownSocial) {
+      setDropdownSocial(item._id);
+      setShowDropdownSocial(true);
+    } else {
+      setDropdownSocial("");
+      setShowDropdownSocial(false);
+    }
+  };
+
+  const HandleDropdownSocialSub = (item) => {
+    if (!showDropdownSocialSub) {
+      setDropdownSocialSub(item._id);
+      setShowDropdownSocialSub(true);
+    } else {
+      setDropdownSocialSub("");
+      setShowDropdownSocialSub(false);
+    }
+  };
+
   useOnClickOutside(ref, () => setShowAndClose(false));
 
   useOnClickOutside(refSub, () => setShowAndCloseSub(false));
+
+  useOnClickOutside(refSocial, () => setDropdownSocial(""));
+
+  useOnClickOutside(refSocialSub, () => setDropdownSocial(""));
 
   return (
     <ArticleDisplayDiv>
@@ -253,6 +293,69 @@ const DashboardArticleDisplay = () => {
             </div>
           </div>
           <div className={"articleWrapper__headerProfileSectionState"}>
+            <div className="sharing_wrapper">
+              <div
+                className="sharingbody"
+                onClick={() => HandleDropdownSocial(getSingleArticle)}
+              >
+                <FaShareAlt className="sharingicon" />
+              </div>
+
+              {dropdownSocial === getSingleArticle?._id && (
+                <div className="SocialWrapper" ref={refSocial}>
+                  <div className="SocialBody">
+                    <Link
+                      href={`https://www.facebook.com/sharer.php?u=https://www.mirianpost.com/${getSingleArticle?._id}`}
+                      target={"blank"}
+                    >
+                      <div className="SocialContent">
+                        <FaFacebook className="SocialIcon" />
+                      </div>
+                    </Link>
+                  </div>
+
+                  <div className="SocialBody">
+                    <Link
+                      href={`https://api.whatsapp.com/send?text=${getSingleArticle?.title} https://www.mirianpost.com/${getSingleArticle?._id}`}
+                      target={"blank"}
+                    >
+                      <div className="SocialContent">
+                        <FaWhatsapp className="SocialIcon" />
+                      </div>
+                    </Link>
+                  </div>
+
+                  <div className="SocialBody">
+                    <Link
+                      href={`https://www.linkedin.com/shareArticle?url=ttps://www.mirianpost.com/${getSingleArticle?._id}&title=${getSingleArticle?.title}`}
+                      target={"blank"}
+                    >
+                      <div className="SocialContent">
+                        <FaLinkedin className="SocialIcon" />
+                      </div>
+                    </Link>
+                  </div>
+
+                  <div className="SocialBody">
+                    <Link
+                      href={`https://twitter.com/share?url=https://www.mirianpost.com/${getSingleArticle?._id}&text=${getSingleArticle?.title}`}
+                      target={"blank"}
+                    >
+                      <div className="SocialContent">
+                        <FaTwitter className="SocialIcon" />
+                      </div>
+                    </Link>
+                  </div>
+
+                  {/* <div className="SocialBody">
+                          <div className="SocialContent">
+                            <FaInstagram className="SocialIcon" />
+                          </div>
+                        </div> */}
+                </div>
+              )}
+            </div>
+
             {!getSingleArticle?.save ||
             getSingleArticle?.save === null ||
             getSingleArticle?.save === undefined ? (
@@ -410,6 +513,69 @@ const DashboardArticleDisplay = () => {
             </div>
           </div>
           <div className={"articleWrapper__SocialMedaiStatus"}>
+            <div className="sharing_wrapper">
+              <div
+                className="sharingbody"
+                onClick={() => HandleDropdownSocialSub(getSingleArticle)}
+              >
+                <FaShareAlt className="sharingicon" />
+              </div>
+
+              {dropdownSocialSub === getSingleArticle?._id && (
+                <div className="SocialWrapper" ref={refSocialSub}>
+                  <div className="SocialBody">
+                    <Link
+                      href={`https://www.facebook.com/sharer.php?u=https://www.mirianpost.com/${getSingleArticle?._id}`}
+                      target={"blank"}
+                    >
+                      <div className="SocialContent">
+                        <FaFacebook className="SocialIcon" />
+                      </div>
+                    </Link>
+                  </div>
+
+                  <div className="SocialBody">
+                    <Link
+                      href={`https://api.whatsapp.com/send?text=${getSingleArticle?.title} https://www.mirianpost.com/${getSingleArticle?._id}`}
+                      target={"blank"}
+                    >
+                      <div className="SocialContent">
+                        <FaWhatsapp className="SocialIcon" />
+                      </div>
+                    </Link>
+                  </div>
+
+                  <div className="SocialBody">
+                    <Link
+                      href={`https://www.linkedin.com/shareArticle?url=ttps://www.mirianpost.com/${getSingleArticle?._id}&title=${getSingleArticle?.title}`}
+                      target={"blank"}
+                    >
+                      <div className="SocialContent">
+                        <FaLinkedin className="SocialIcon" />
+                      </div>
+                    </Link>
+                  </div>
+
+                  <div className="SocialBody">
+                    <Link
+                      href={`https://twitter.com/share?url=https://www.mirianpost.com/${getSingleArticle?._id}&text=${getSingleArticle?.title}`}
+                      target={"blank"}
+                    >
+                      <div className="SocialContent">
+                        <FaTwitter className="SocialIcon" />
+                      </div>
+                    </Link>
+                  </div>
+
+                  {/* <div className="SocialBody">
+                          <div className="SocialContent">
+                            <FaInstagram className="SocialIcon" />
+                          </div>
+                        </div> */}
+                </div>
+              )}
+            </div>
+
             {!getSingleArticle?.save ||
             getSingleArticle?.save === null ||
             getSingleArticle?.save === undefined ? (

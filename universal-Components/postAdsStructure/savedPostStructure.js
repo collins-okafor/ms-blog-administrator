@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import photoOne from "../../assets/Images/about-us.jpg";
+import photoOne from "../../assets/Icons/avatar-profile-photo.png";
 import Image from "next/image";
 import { PostDiv } from "./styles/post.styles";
 import { MdOutlineBookmarkRemove } from "react-icons/md";
@@ -14,15 +14,27 @@ import NotFound from "../Notfound";
 import moment from "moment";
 import PostDropdown from "../postDropdown";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
+import {
+  FaFacebook,
+  FaLinkedin,
+  FaShareAlt,
+  FaTwitter,
+  FaWhatsapp,
+} from "react-icons/fa";
+import Link from "next/link";
 
 const SavedPostStructure = () => {
   const ref = useRef();
+  const refSocial = useRef();
   const [change, setChange] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
   const savedPost = useSelector((state) => state.DashboardReducers.savedPost);
   const [dropdown, setDropdown] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
+
+  const [dropdownSocial, setDropdownSocial] = useState("");
+  const [showDropdownSocial, setShowDropdownSocial] = useState(false);
 
   const Truncate = (word, count = 60) => {
     const Word_length = count;
@@ -68,7 +80,19 @@ const SavedPostStructure = () => {
     }
   };
 
+  const HandleDropdownSocial = (item) => {
+    if (!showDropdownSocial) {
+      setDropdownSocial(item._id);
+      setShowDropdownSocial(true);
+    } else {
+      setDropdownSocial("");
+      setShowDropdownSocial(false);
+    }
+  };
+
   useOnClickOutside(ref, () => setDropdown(""));
+
+  useOnClickOutside(refSocial, () => setDropdownSocial(""));
 
   return (
     <PostDiv>
@@ -135,6 +159,69 @@ const SavedPostStructure = () => {
                   <button>{item?.tag}</button>
                 </div>
                 <div className="postWrapperContent">
+                  <div className="sharing_wrapper">
+                    <div
+                      className="sharingbody"
+                      onClick={() => HandleDropdownSocial(item)}
+                    >
+                      <FaShareAlt className="sharingicon" />
+                    </div>
+
+                    {dropdownSocial === item._id && (
+                      <div className="SocialWrapper" ref={refSocial}>
+                        <div className="SocialBody">
+                          <Link
+                            href={`https://www.facebook.com/sharer.php?u=https://www.mirianpost.com/${item._id}`}
+                            target={"blank"}
+                          >
+                            <div className="SocialContent">
+                              <FaFacebook className="SocialIcon" />
+                            </div>
+                          </Link>
+                        </div>
+
+                        <div className="SocialBody">
+                          <Link
+                            href={`https://api.whatsapp.com/send?text=${item?.title} https://www.mirianpost.com/${item._id}`}
+                            target={"blank"}
+                          >
+                            <div className="SocialContent">
+                              <FaWhatsapp className="SocialIcon" />
+                            </div>
+                          </Link>
+                        </div>
+
+                        <div className="SocialBody">
+                          <Link
+                            href={`https://www.linkedin.com/shareArticle?url=ttps://www.mirianpost.com/${item._id}&title=${item?.title}`}
+                            target={"blank"}
+                          >
+                            <div className="SocialContent">
+                              <FaLinkedin className="SocialIcon" />
+                            </div>
+                          </Link>
+                        </div>
+
+                        <div className="SocialBody">
+                          <Link
+                            href={`https://twitter.com/share?url=https://www.mirianpost.com/${item._id}&text=${item?.title}`}
+                            target={"blank"}
+                          >
+                            <div className="SocialContent">
+                              <FaTwitter className="SocialIcon" />
+                            </div>
+                          </Link>
+                        </div>
+
+                        {/* <div className="SocialBody">
+                          <div className="SocialContent">
+                            <FaInstagram className="SocialIcon" />
+                          </div>
+                        </div> */}
+                      </div>
+                    )}
+                  </div>
+
                   <div
                     className="postWrapperContentSaveIconBody"
                     onClick={() => HandleDeleteFromSave(item)}

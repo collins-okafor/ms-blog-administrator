@@ -249,6 +249,18 @@ const DashBoardServices = {
       });
   },
 
+  getAllFollowers: () => {
+    return APIs.get(`/api/following/my_followers`)
+      .then((data) => {
+        if (data?.data?.message === "success") {
+          return data?.data;
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+
   getOtherUserFollowerCount: (userId) => {
     return APIs.get(`/api/following/follower_count/${userId}`)
       .then((data) => {
@@ -410,7 +422,20 @@ const DashBoardServices = {
   },
 
   EditArticle: (id, payload) => {
+    console.log(id, payload, "session 111");
     return APIs.patch(`/api/write/${id}`, payload)
+      .then((data) => {
+        if (data?.data?.message === "success") {
+          return data?.data;
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+
+  EditArticleByAdmin: (id, payload) => {
+    return APIs.patch(`/api/write/editByAdmin/${id}`, payload)
       .then((data) => {
         if (data?.data?.message === "success") {
           return data?.data;
@@ -439,6 +464,20 @@ const DashBoardServices = {
         return data?.data;
       }
     });
+  },
+
+  SubTagsArticle: (arg, tag, subTag) => {
+    return APIs.get(`/api/write/sub_tag_article/${tag}/${subTag}`, {
+      headers: { limit: arg },
+    })
+      .then((data) => {
+        if (data?.data?.message === "success") {
+          return data?.data;
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
   },
 
   getTags: () => {

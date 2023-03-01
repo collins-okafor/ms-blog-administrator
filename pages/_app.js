@@ -64,7 +64,11 @@ function MyApp({ Component, pageProps }) {
         throw err;
       });
 
-    if (constants) {
+    if (
+      constants[0] !== undefined ||
+      constants[1] !== undefined ||
+      constants[2] !== undefined
+    ) {
       dispatch(getDashboardAllArticle(constants[0]));
       dispatch(getUserStore(constants[1]));
       dispatch(getSubtitleSelectedTag(constants[2][0]?.title));

@@ -4,6 +4,7 @@ import Following from "../../components/following";
 import DashBoardServices from "../../services/dashboardServices";
 import {
   getAllFollowingDetails,
+  getMyFollowers,
   getSavedPost,
 } from "../../store/actions/dashboardAction";
 import DashbaordPageWrapper from "../../universal-Components/DashobardPageWrapper";
@@ -21,6 +22,7 @@ const Followings = () => {
     const constants = await Promise.all([
       DashBoardServices.getAllYourSavedPost(),
       DashBoardServices.getAllFollowing(),
+      DashBoardServices.getAllFollowers(),
     ])
       .then((data) => {
         return data;
@@ -47,6 +49,7 @@ const Followings = () => {
 
     dispatch(getSavedPost(constants[0]?.data));
     dispatch(getAllFollowingDetails(constants[1]?.data));
+    dispatch(getMyFollowers(constants[2]?.data));
     setLoading(false);
   };
 

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getLoginPageCounter } from "../../store/actions/authAction";
-import phoneTwo from "../../assets/Images/63936.jpg";
+import phoneTwo from "../../assets/Images/63936.webp";
 import { SearchStyle } from "./styles/style";
 import landingpageService from "../../services/landingpageServices";
 import Image from "next/image";

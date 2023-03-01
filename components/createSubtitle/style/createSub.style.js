@@ -20,7 +20,7 @@ export const SubTitleDiv = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin: 40px 0px;
+  margin: 40px 0px 100px 0px;
 
   .create_subtitle_wrapper {
     width: 90%;

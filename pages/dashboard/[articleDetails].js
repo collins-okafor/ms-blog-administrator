@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DashBoardServices from "../../services/dashboardServices";
+import WriteService from "../../services/writeService";
 import {
   getDashboardSinglePost,
   getSinglePostComment,
@@ -62,6 +63,12 @@ const ArticleDetails = () => {
         if (constants[0]?._id === constants[1]?.createdBy) {
           constants[1]["followed"] = "my";
         }
+
+        WriteService.ViewArticle(articleDetails)
+          .then((data) => {})
+          .catch((err) => {
+            throw err;
+          });
 
         dispatch(getUserDetails(constants[0]));
         dispatch(getDashboardSinglePost(constants[1]));

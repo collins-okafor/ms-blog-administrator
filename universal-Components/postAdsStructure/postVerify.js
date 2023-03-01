@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from "react";
-import photoOne from "../../assets/Images/63936.jpg";
+import photoOne from "../../assets/Images/63936.webp";
 import photoTwo from "../../assets/Icons/avatar-profile-photo.png";
 import Image from "next/image";
 import { PostDiv } from "./styles/post.styles";
@@ -16,16 +16,28 @@ import DashBoardServices from "../../services/dashboardServices";
 import { toast } from "react-toastify";
 import { PostVerifyDiv } from "./styles/postVerify.style";
 import { getPending, getPublish } from "../../store/actions/dashboardAction";
+import {
+  FaFacebook,
+  FaLinkedin,
+  FaShareAlt,
+  FaTwitter,
+  FaWhatsapp,
+} from "react-icons/fa";
+import Link from "next/link";
 
 const PostVerify = () => {
   const ref = useRef();
 
+  const refSocial = useRef();
   const [change, setChange] = useState(false);
   const [post, setPost] = useState([]);
   const dispatch = useDispatch();
   const router = useRouter();
   const [dropdown, setDropdown] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
+
+  const [dropdownSocial, setDropdownSocial] = useState("");
+  const [showDropdownSocial, setShowDropdownSocial] = useState(false);
 
   const dynamicPost = useSelector((state) => state.generalReducer.dynamicPost);
 
@@ -57,6 +69,16 @@ const PostVerify = () => {
     }
   };
 
+  const HandleDropdownSocial = (item) => {
+    if (!showDropdownSocial) {
+      setDropdownSocial(item._id);
+      setShowDropdownSocial(true);
+    } else {
+      setDropdownSocial("");
+      setShowDropdownSocial(false);
+    }
+  };
+
   const handleChangePublish = (e, item) => {
     const { checked } = e.target;
 
@@ -72,7 +94,7 @@ const PostVerify = () => {
 
     dispatch(getDynamicPost(dynamicPost));
 
-    DashBoardServices.EditArticle(item._id, item)
+    DashBoardServices.EditArticleByAdmin(item._id, item)
       .then((data) => {
         // console.log(data);
         if (checked) {
@@ -107,7 +129,6 @@ const PostVerify = () => {
 
     await DashBoardServices.SavePost(item._id, payload)
       .then((data) => {
-        console.log(data, "system");
         toast("saved successfully");
       })
       .catch((err) => {
@@ -130,7 +151,6 @@ const PostVerify = () => {
 
     await DashBoardServices.deleteSavedPost(item._id)
       .then((data) => {
-        console.log(data, "delete");
         toast("savedpost successfully deleted");
       })
       .catch((err) => {
@@ -141,6 +161,8 @@ const PostVerify = () => {
   };
 
   useOnClickOutside(ref, () => setDropdown(""));
+
+  useOnClickOutside(refSocial, () => setDropdownSocial(""));
 
   return (
     <PostVerifyDiv>
@@ -224,6 +246,69 @@ const PostVerify = () => {
                 <button>{item?.tag}</button>
               </div>
               <div className="postWrapperContent">
+                <div className="sharing_wrapper">
+                  <div
+                    className="sharingbody"
+                    onClick={() => HandleDropdownSocial(item)}
+                  >
+                    <FaShareAlt className="sharingicon" />
+                  </div>
+
+                  {dropdownSocial === item._id && (
+                    <div className="SocialWrapper" ref={refSocial}>
+                      <div className="SocialBody">
+                        <Link
+                          href={`https://www.facebook.com/sharer.php?u=https://www.mirianpost.com/${item._id}`}
+                          target={"blank"}
+                        >
+                          <div className="SocialContent">
+                            <FaFacebook className="SocialIcon" />
+                          </div>
+                        </Link>
+                      </div>
+
+                      <div className="SocialBody">
+                        <Link
+                          href={`https://api.whatsapp.com/send?text=${item?.title} https://www.mirianpost.com/${item._id}`}
+                          target={"blank"}
+                        >
+                          <div className="SocialContent">
+                            <FaWhatsapp className="SocialIcon" />
+                          </div>
+                        </Link>
+                      </div>
+
+                      <div className="SocialBody">
+                        <Link
+                          href={`https://www.linkedin.com/shareArticle?url=ttps://www.mirianpost.com/${item._id}&title=${item?.title}`}
+                          target={"blank"}
+                        >
+                          <div className="SocialContent">
+                            <FaLinkedin className="SocialIcon" />
+                          </div>
+                        </Link>
+                      </div>
+
+                      <div className="SocialBody">
+                        <Link
+                          href={`https://twitter.com/share?url=https://www.mirianpost.com/${item._id}&text=${item?.title}`}
+                          target={"blank"}
+                        >
+                          <div className="SocialContent">
+                            <FaTwitter className="SocialIcon" />
+                          </div>
+                        </Link>
+                      </div>
+
+                      {/* <div className="SocialBody">
+                          <div className="SocialContent">
+                            <FaInstagram className="SocialIcon" />
+                          </div>
+                        </div> */}
+                    </div>
+                  )}
+                </div>
+
                 {!item?.save ||
                 item?.save === null ||
                 item?.save === undefined ? (

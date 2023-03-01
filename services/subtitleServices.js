@@ -38,6 +38,30 @@ const SubServices = {
       });
   },
 
+  CreateEditSubtitle: async (id, payload) => {
+    return APIs.patch(`/api/subtitle/subcreate/${id}`, payload)
+      .then((data) => {
+        if (data?.data?.message === "success") {
+          return data?.data;
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+
+  // EditSubtitleEdit: async (id, payload) => {
+  //   return APIs.patch(`/api/subtitle/subedit/${id}`, payload)
+  //     .then((data) => {
+  //       if (data?.data?.message === "success") {
+  //         return data?.data;
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       throw err;
+  //     });
+  // },
+
   deleteSubtitle: async (id) => {
     return APIs.delete(`/api/subtitle/${id}`)
       .then((data) => {

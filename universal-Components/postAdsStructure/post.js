@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import photoOne from "../../assets/Icons/avatar-profile-photo.png";
-import photoTwo from "../../assets/Images/63936.jpg";
+import photoTwo from "../../assets/Images/63936.webp";
 import Image from "next/image";
 import { PostDiv } from "./styles/post.styles";
 import { MdOutlineBookmarkAdd, MdOutlineBookmarkRemove } from "react-icons/md";
@@ -15,9 +15,20 @@ import moment from "moment";
 import NotFound from "../Notfound";
 import PostDropdown from "../postDropdown";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+  FaShareAlt,
+  FaTelegram,
+  FaTwitter,
+  FaWhatsapp,
+} from "react-icons/fa";
+import Link from "next/link";
 
 const Post = () => {
   const ref = useRef();
+  const refSocial = useRef();
   const [change, setChange] = useState(false);
   const [post, setPost] = useState([]);
   const dispatch = useDispatch();
@@ -25,6 +36,9 @@ const Post = () => {
   const dynamicPost = useSelector((state) => state.generalReducer.dynamicPost);
   const [dropdown, setDropdown] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
+
+  const [dropdownSocial, setDropdownSocial] = useState("");
+  const [showDropdownSocial, setShowDropdownSocial] = useState(false);
 
   // useEffect(() => {
   //   setPost(dynamicPost);
@@ -100,7 +114,19 @@ const Post = () => {
     }
   };
 
+  const HandleDropdownSocial = (item) => {
+    if (!showDropdownSocial) {
+      setDropdownSocial(item._id);
+      setShowDropdownSocial(true);
+    } else {
+      setDropdownSocial("");
+      setShowDropdownSocial(false);
+    }
+  };
+
   useOnClickOutside(ref, () => setDropdown(""));
+
+  useOnClickOutside(refSocial, () => setDropdownSocial(""));
 
   return (
     <PostDiv>
@@ -171,6 +197,69 @@ const Post = () => {
                   <button>{item?.tag}</button>
                 </div>
                 <div className="postWrapperContent">
+                  <div className="sharing_wrapper">
+                    <div
+                      className="sharingbody"
+                      onClick={() => HandleDropdownSocial(item)}
+                    >
+                      <FaShareAlt className="sharingicon" />
+                    </div>
+
+                    {dropdownSocial === item._id && (
+                      <div className="SocialWrapper" ref={refSocial}>
+                        <div className="SocialBody">
+                          <Link
+                            href={`https://www.facebook.com/sharer.php?u=https://www.mirianpost.com/${item._id}`}
+                            target={"blank"}
+                          >
+                            <div className="SocialContent">
+                              <FaFacebook className="SocialIcon" />
+                            </div>
+                          </Link>
+                        </div>
+
+                        <div className="SocialBody">
+                          <Link
+                            href={`https://api.whatsapp.com/send?text=${item?.title} https://www.mirianpost.com/${item._id}`}
+                            target={"blank"}
+                          >
+                            <div className="SocialContent">
+                              <FaWhatsapp className="SocialIcon" />
+                            </div>
+                          </Link>
+                        </div>
+
+                        <div className="SocialBody">
+                          <Link
+                            href={`https://www.linkedin.com/shareArticle?url=ttps://www.mirianpost.com/${item._id}&title=${item?.title}`}
+                            target={"blank"}
+                          >
+                            <div className="SocialContent">
+                              <FaLinkedin className="SocialIcon" />
+                            </div>
+                          </Link>
+                        </div>
+
+                        <div className="SocialBody">
+                          <Link
+                            href={`https://twitter.com/share?url=https://www.mirianpost.com/${item._id}&text=${item?.title}`}
+                            target={"blank"}
+                          >
+                            <div className="SocialContent">
+                              <FaTwitter className="SocialIcon" />
+                            </div>
+                          </Link>
+                        </div>
+
+                        {/* <div className="SocialBody">
+                          <div className="SocialContent">
+                            <FaInstagram className="SocialIcon" />
+                          </div>
+                        </div> */}
+                      </div>
+                    )}
+                  </div>
+
                   {!item?.save ||
                   item?.save === null ||
                   item?.save === undefined ? (

@@ -229,12 +229,59 @@ export const PostVerifyDiv = styled.div`
         .postWrapperContent {
           display: flex;
           align-items: center;
+          gap: 30px;
+
+          .sharing_wrapper {
+            position: relative;
+
+            .sharingbody {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+
+              .sharingicon {
+                font-size: 20px;
+                color: ${({ theme }) => theme.textColor};
+                transition: all 1s;
+              }
+            }
+
+            .SocialWrapper {
+              z-index: 10;
+              margin-top: 8px;
+              position: absolute;
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              flex-direction: column;
+              box-shadow: 0px 2px 8px 0px ${({ theme }) => theme.boxShaw};
+              background-color: ${({ theme }) => theme.primaryColor};
+              transition: all 1.5s;
+              padding: 10px;
+              border-radius: 4px;
+
+              .SocialBody {
+                .SocialContent {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+
+                  .SocialIcon {
+                    color: ${({ theme }) => theme.secondaryColor};
+                    font-size: 22px;
+                    cursor: pointer;
+                    transition: all 1.5s;
+                  }
+                }
+              }
+            }
+          }
 
           .postWrapperContentSaveIconBody {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 30px;
             cursor: pointer;
 
             .postWrapperContentSaveIcon {

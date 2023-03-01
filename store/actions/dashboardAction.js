@@ -4,6 +4,9 @@ import {
   DASHBOARD_LOADER,
   DASHBOARD_SINGLE_POST,
   DASHBOARD_SUBTITLE,
+  MY_FOLLOWERS,
+  MY_STORIES_DETAILS,
+  MY_STORIES_LOADER,
   MY_USER_DETAILS,
   NEW,
   NOTIFICATION_STATE,
@@ -16,6 +19,7 @@ import {
   SINGLE_POST_DISLIKE,
   SINGLE_POST_LIKE,
   SUBTITLE_LOADER_CONFIGURATION,
+  SUBTITLE_SELECTED_SUB_TAG,
   SUBTITLE_SELECTED_TAG,
   TOTAL,
   TOTAL_ARTICLE,
@@ -109,4 +113,20 @@ export const getSubtitleSelectedTag = (param) => (dispatch) => {
 
 export const getTotalArticle = (param) => (dispatch) => {
   dispatch({ type: TOTAL_ARTICLE, payload: param });
+};
+
+export const getMyStoriesDetails = (param) => (dispatch) => {
+  dispatch({ type: MY_STORIES_DETAILS, payload: param });
+};
+
+export const getMyStoriesLoader = (param) => (dispatch) => {
+  dispatch({ type: MY_STORIES_LOADER, payload: param });
+};
+
+export const getSubTagDetails = (param) => (dispatch) => {
+  dispatch({ type: SUBTITLE_SELECTED_SUB_TAG, payload: param });
+};
+
+export const getMyFollowers = (param) => (dispatch) => {
+  dispatch({ type: MY_FOLLOWERS, payload: param });
 };
