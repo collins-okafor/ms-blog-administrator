@@ -27,6 +27,9 @@ const OtherUserHeader = () => {
       email: otherUserDetails?.email,
       username: otherUserDetails?.username,
       followedUserId: otherUserDetails?._id,
+      followers_image: otherUserDetails?.profile_pic
+        ? otherUserDetails?.profile_pic
+        : "",
     };
 
     const newData = { ...otherUserDetails, followed: true };

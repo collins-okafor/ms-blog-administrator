@@ -192,12 +192,12 @@ const PostVerify = () => {
           <div className="mainPostContainer">
             <div
               className="mainPostContainerHeaderWrapper"
-              // onClick={() => HandleSinglePost(item)}
+              onClick={() => HandleSinglePost(item)}
             >
               <div className="mainPostContainerHeaderWrapperSystem">
                 <div
                   className="mainPostContainerHeaderWrapperSystemBody"
-                  onClick={() => HandleSinglePost(item)}
+                  // onClick={() => HandleSinglePost(item)}
                 >
                   <div className="profileImage">
                     <Image
@@ -220,7 +220,7 @@ const PostVerify = () => {
                   </div>
                 </div>
 
-                <div className="verify">
+                {/* <div className="verify">
                   <label class="switch">
                     <input
                       type="checkbox"
@@ -229,7 +229,7 @@ const PostVerify = () => {
                     />
                     <span class="slider round"></span>
                   </label>
-                </div>
+                </div> */}
               </div>
 
               <div className="mainPostContainerHeaderWrapperContent">
@@ -245,8 +245,20 @@ const PostVerify = () => {
                 <p>{`${moment(item.date).format("MMM DD, YYYY hh:mm")}`}</p>
                 <button>{item?.tag}</button>
               </div>
+
               <div className="postWrapperContent">
-                <div className="sharing_wrapper">
+                <div className="verify">
+                  <label class="switch">
+                    <input
+                      type="checkbox"
+                      checked={item.publish === "publish" ? true : false}
+                      onChange={(e) => handleChangePublish(e, item)}
+                    />
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+
+                {/* <div className="sharing_wrapper">
                   <div
                     className="sharingbody"
                     onClick={() => HandleDropdownSocial(item)}
@@ -300,11 +312,7 @@ const PostVerify = () => {
                         </Link>
                       </div>
 
-                      {/* <div className="SocialBody">
-                          <div className="SocialContent">
-                            <FaInstagram className="SocialIcon" />
-                          </div>
-                        </div> */}
+                     
                     </div>
                   )}
                 </div>
@@ -342,7 +350,7 @@ const PostVerify = () => {
                       fullDetails={dynamicPost}
                     />
                   )}
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

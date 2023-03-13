@@ -32,10 +32,10 @@ const ViewProfileCard = () => {
               <div className="cardListSearchBodyImageBody">
                 <Image
                   src={
-                    user.profile_pic &&
-                    (user.profile_pic.startsWith("http") ||
-                      user.profile_pic.startsWith("/"))
-                      ? `${user.profile_pic}`
+                    user.followers_image &&
+                    (user.followers_image.startsWith("http") ||
+                      user.followers_image.startsWith("/"))
+                      ? `${user.followers_image}`
                       : Profile
                   }
                   alt=""

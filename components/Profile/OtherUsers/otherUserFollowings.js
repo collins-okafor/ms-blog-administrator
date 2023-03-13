@@ -3,7 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { FollowersDiv } from "../styles/follower.style";
 
-const OtherUserFollowers = () => {
+const OtherUserFollowings = () => {
   const router = useRouter();
 
   const otherUserDetails = useSelector(
@@ -17,13 +17,13 @@ const OtherUserFollowers = () => {
   return (
     <FollowersDiv>
       <div className="followersHeader">
-        <p>Followers</p>
+        <p>Followings</p>
       </div>
       <div className="followersBody">
         <div className="followersBodyOne">
-          <p className="followersBodynum">numbers of followers</p>
+          <p className="followersBodynum">numbers of followings</p>
           <p className="followersBodycount">
-            {otherUserDetails?.my_follower_count}
+            {otherUserDetails?.follower_count}
           </p>
         </div>
         {/* <div className="followersBodyTwo">
@@ -37,4 +37,4 @@ const OtherUserFollowers = () => {
   );
 };
 
-export default OtherUserFollowers;
+export default OtherUserFollowings;

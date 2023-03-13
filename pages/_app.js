@@ -69,6 +69,11 @@ function MyApp({ Component, pageProps }) {
       constants[1] !== undefined ||
       constants[2] !== undefined
     ) {
+      if (!constants[1]?.admin) {
+        localStorage.clear();
+        router.push("/");
+      }
+
       dispatch(getDashboardAllArticle(constants[0]));
       dispatch(getUserStore(constants[1]));
       dispatch(getSubtitleSelectedTag(constants[2][0]?.title));

@@ -201,9 +201,9 @@ const DashboardNavList = () => {
               key={key}
               className={`NavListWrapper ${
                 subtitleSelectedTag === item.title && "selected"
-              } ${item?.sub && "subAdded"}`}
+              } ${item?.sub?.length > 0 && "subAdded"}`}
               onClick={() => {
-                if (item?.sub) {
+                if (item?.sub?.length > 0) {
                 } else {
                   dispatch(getSubTagDetails(""));
                   handleTags(item);
@@ -215,7 +215,7 @@ const DashboardNavList = () => {
                 onClick={() => {
                   HandleShowADropdown(item);
 
-                  if (item?.sub) {
+                  if (item?.sub?.length > 0) {
                     if (item?._id !== showDropDown?.id) {
                       dispatch(getSubTagDetails(""));
                       handleTags(item);
@@ -225,7 +225,7 @@ const DashboardNavList = () => {
               >
                 <p className="NavListData">{item.title}</p>
 
-                {item?.sub && (
+                {item?.sub?.length > 0 && (
                   <div>
                     {showDropDown?.id === item?._id &&
                     showDropDown?.checker === true ? (
@@ -242,7 +242,7 @@ const DashboardNavList = () => {
               </div>
 
               {showDropDown?.id === item?._id &&
-                item?.sub &&
+                item?.sub?.length > 0 &&
                 showDropDown?.checker && (
                   <div className="showDropDownWrapper" ref={ref}>
                     <div className="dropdown_wrapper">
@@ -251,7 +251,7 @@ const DashboardNavList = () => {
                         onClick={() => {
                           HandleShowADropdown(item);
 
-                          if (item?.sub) {
+                          if (item?.sub?.length > 0) {
                             dispatch(getSubTagDetails(""));
                             handleTags(item);
                           }

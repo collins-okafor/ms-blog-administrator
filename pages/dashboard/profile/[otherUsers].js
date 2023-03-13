@@ -40,7 +40,11 @@ const OtherUsersPage = () => {
 
       await DashBoardServices.getOtherUserSavePostCount(constants[0]?._id)
         .then((data) => {
-          constants[0]["save_count"] = data?.data;
+          if (data?.data) {
+            constants[0]["save_count"] = data?.data;
+          } else {
+            constants[0]["save_count"] = 0;
+          }
         })
         .catch((err) => {
           throw err;
@@ -48,7 +52,23 @@ const OtherUsersPage = () => {
 
       await DashBoardServices.getOtherUserFollowerCount(constants[0]?._id)
         .then((data) => {
-          constants[0]["follower_count"] = data?.data;
+          if (data?.data) {
+            constants[0]["follower_count"] = data?.data;
+          } else {
+            constants[0]["follower_count"] = 0;
+          }
+        })
+        .catch((err) => {
+          throw err;
+        });
+
+      await DashBoardServices.getMyOtherUserFollowerCount(constants[0]?._id)
+        .then((data) => {
+          if (data?.data) {
+            constants[0]["my_follower_count"] = data?.data;
+          } else {
+            constants[0]["my_follower_count"] = 0;
+          }
         })
         .catch((err) => {
           throw err;

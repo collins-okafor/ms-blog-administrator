@@ -29,10 +29,10 @@ const CardList = () => {
             <div className="cardListSearchBodyImageBody">
               <Image
                 src={
-                  item.profile_pic &&
-                  (item.profile_pic.startsWith("http") ||
-                    item.profile_pic.startsWith("/"))
-                    ? `${item.profile_pic}`
+                  item.followers_image &&
+                  (item.followers_image.startsWith("http") ||
+                    item.followers_image.startsWith("/"))
+                    ? `${item.followers_image}`
                     : Profile
                 }
                 alt=""

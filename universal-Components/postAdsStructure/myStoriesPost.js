@@ -263,14 +263,34 @@ const MyStoriesPost = () => {
                     item?.save === undefined ? (
                       <div
                         className="postWrapperContentSaveIconBody"
-                        onClick={() => HandleSavePost(item)}
+                        style={{
+                          cursor: `${
+                            router?.pathname !== "/dashboard/stories" &&
+                            "not-allowed"
+                          }`,
+                        }}
+                        onClick={() => {
+                          if (router?.pathname === "/dashboard/stories") {
+                            HandleSavePost(item);
+                          }
+                        }}
                       >
                         <MdOutlineBookmarkAdd className="postWrapperContentSaveIcon" />
                       </div>
                     ) : (
                       <div
                         className="postWrapperContentSaveIconBody"
-                        onClick={() => HandleDeleteFromSave(item)}
+                        style={{
+                          cursor: `${
+                            router?.pathname !== "/dashboard/stories" &&
+                            "not-allowed"
+                          }`,
+                        }}
+                        onClick={() => {
+                          if (router?.pathname === "/dashboard/stories") {
+                            HandleDeleteFromSave(item);
+                          }
+                        }}
                       >
                         <MdOutlineBookmarkRemove className="postWrapperContentSaveIcon" />
                       </div>

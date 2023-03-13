@@ -2,7 +2,12 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { memo } from "react";
 import { BsBell, BsSignpost2Fill } from "react-icons/bs";
-import { FaClipboardList, FaStackExchange } from "react-icons/fa";
+import {
+  FaClipboard,
+  FaClipboardCheck,
+  FaClipboardList,
+  FaStackExchange,
+} from "react-icons/fa";
 import { FiEdit, FiHome } from "react-icons/fi";
 import { DashbardSideBarDiv } from "./styles/dashbaordSidebar.style";
 import { GrOverview } from "react-icons/gr";
@@ -119,7 +124,9 @@ const sideBarLink = [
   { logo: FiHome, title: "Dashboard", link: "/dashboard/overview" },
   { logo: BsBell, title: "Notifications", link: "/dashboard/notifications" },
   { logo: FaStackExchange, title: "Following", link: "/dashboard/followings" },
-  { logo: FaClipboardList, title: "Stroies", link: "/dashboard/stories" },
+  { logo: FaClipboardList, title: "Resent", link: "/dashboard/resent" },
+  { logo: FaClipboard, title: "Rejected", link: "/dashboard/rejected" },
+  { logo: FaClipboardCheck, title: "Stroies", link: "/dashboard/stories" },
   { logo: FiEdit, title: "Write", link: "/dashboard/write" },
 
   { logo: CiNoWaitingSign, title: "Pending", link: "/dashboard/pending" },

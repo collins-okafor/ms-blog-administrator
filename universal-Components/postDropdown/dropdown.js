@@ -24,6 +24,7 @@ const PDropdown = forwardRef(({ details }, ref) => {
       email: details.email,
       username: details.username,
       followedUserId: details.createdBy,
+      followers_image: details.profile_pic ? details.profile_pic : "",
     };
 
     dispatch(getDashboardSinglePost(details));

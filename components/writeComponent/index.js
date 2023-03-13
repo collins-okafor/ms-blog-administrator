@@ -161,7 +161,7 @@ const WriteComponent = () => {
           toast("posted successfully");
           dispatch({ type: AUTHLOADER, payload: false });
 
-          router.push("/dashboard/stories");
+          router.push("/dashboard/resent");
         })
         .catch((err) => {
           throw err;
@@ -200,7 +200,7 @@ const WriteComponent = () => {
           toast("Edited successfully");
           dispatch({ type: AUTHLOADER, payload: false });
 
-          router.push("/dashboard/stories");
+          router.back();
         })
         .catch((err) => {
           throw err;

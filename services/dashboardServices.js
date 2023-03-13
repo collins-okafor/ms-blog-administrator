@@ -249,6 +249,19 @@ const DashBoardServices = {
       });
   },
 
+  getMyFollowerCount: () => {
+    return APIs.get(`/api/following/my_followers_count`)
+      .then((data) => {
+        console.log(data?.data, "today");
+        if (data?.data?.message === "success") {
+          return data?.data;
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+
   getAllFollowers: () => {
     return APIs.get(`/api/following/my_followers`)
       .then((data) => {
@@ -263,6 +276,18 @@ const DashBoardServices = {
 
   getOtherUserFollowerCount: (userId) => {
     return APIs.get(`/api/following/follower_count/${userId}`)
+      .then((data) => {
+        if (data?.data?.message === "success") {
+          return data?.data;
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+
+  getMyOtherUserFollowerCount: (userId) => {
+    return APIs.get(`/api/following/my_followers_count/${userId}`)
       .then((data) => {
         if (data?.data?.message === "success") {
           return data?.data;

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { FollowersDiv } from "./styles/follower.style";
 import Skeleton from "@mui/material/Skeleton";
 
-const Followers = () => {
+const Followings = () => {
   const router = useRouter();
 
   const myUserDetails = useSelector(
@@ -18,25 +18,25 @@ const Followers = () => {
   return (
     <FollowersDiv>
       <div className="followersHeader">
-        <p>Followers</p>
+        <p>Followings</p>
       </div>
       <div className="followersBody">
         <div className="followersBodyOne">
-          <p className="followersBodynum">numbers of followers</p>
+          <p className="followersBodynum">numbers of followings</p>
           {!myUserDetails ? (
             <div>
               <Skeleton animation="wave" height={50} width={180} />
             </div>
           ) : (
             <p className="followersBodycount">
-              {myUserDetails?.my_follower_count}
+              {myUserDetails?.follower_count}
             </p>
           )}
         </div>
         <div className="followersBodyTwo">
-          <p className="followersBodyTwoList">link to view followers</p>
+          <p className="followersBodyTwoList">link to view followings</p>
           <p className="followersBodyTwoView" onClick={HandleShowFollowers}>
-            view followers
+            view followings
           </p>
         </div>
       </div>
@@ -44,4 +44,4 @@ const Followers = () => {
   );
 };
 
-export default Followers;
+export default Followings;

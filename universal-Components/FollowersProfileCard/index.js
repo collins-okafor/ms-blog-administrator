@@ -14,7 +14,7 @@ const FollowersProfileCard = () => {
   );
 
   const handleViewProfile = (item) => {
-    router.push(`/dashboard/profile/${item.username}`);
+    router.push(`/dashboard/profile/${item.follower_username}`);
   };
 
   return (
@@ -31,15 +31,24 @@ const FollowersProfileCard = () => {
             <div className="cardListSearchBodyImageWrapper">
               <div className="cardListSearchBodyImageBody">
                 <Image
-                  src={Profile}
+                  src={
+                    user.followersCreator_image &&
+                    (user.followersCreator_image.startsWith("http") ||
+                      user.followersCreator_image.startsWith("/"))
+                      ? `${user.followersCreator_image}`
+                      : Profile
+                  }
                   alt=""
+                  width={100}
+                  height={100}
                   className="cardListSearchBodyImage"
                 />
               </div>
             </div>
             <div className="cardListSearchBodyUsername">
-              <p>{user.username}</p>
+              <p>{user.follower_username}</p>
             </div>
+
             <div
               className="cardListLink"
               onClick={() => handleViewProfile(user)}

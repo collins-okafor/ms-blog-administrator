@@ -20,6 +20,7 @@ const Profile = () => {
       DashBoardServices.getUserDetails(),
       DashBoardServices.getSavePostCount(),
       DashBoardServices.getFollowerCount(),
+      DashBoardServices.getMyFollowerCount(),
     ])
       .then((data) => {
         return data;
@@ -39,6 +40,12 @@ const Profile = () => {
         constants[0]["follower_count"] = constants[2]?.data;
       } else {
         constants[0]["follower_count"] = 0;
+      }
+      console.log(constants[3]?.data, "restart");
+      if (constants[3]?.data) {
+        constants[0]["my_follower_count"] = constants[3]?.data;
+      } else {
+        constants[0]["my_follower_count"] = 0;
       }
     }
 
